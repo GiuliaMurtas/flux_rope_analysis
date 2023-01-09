@@ -8,4 +8,4 @@ The script "current_density_frames.py" saves frames of the current density magni
 
 The script "ionrec.py" produces a 1D plot of the global ionization/recombination rates in PIP (partially ionized plasmas) simulations as a function of time.
 
-The script "heating.py" calculates the global contributions of each heating term (Ohmic heating $\eta J^2$ for all simulations, frictional heating for the PIP simulations) as a function of time.
+The script "heating.py" calculates the global contributions of each heating term (Ohmic heating $\eta J^2$ for all simulations, frictional heating $\frac{1}{2} \alpha_c \rho_n \rho_p v_{D}^{2}$ for the PIP simulations) as a function of time.
