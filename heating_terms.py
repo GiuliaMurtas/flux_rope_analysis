@@ -17,14 +17,11 @@ time1 = []
 
 ## Ohmic heating##
 
-for t in range(0,2):
+for t in range(0,5):
     print(t)
-    eta0 = 0.0001
-    eta1 = 0.001
     
     ## MHD case ##
-    
-    ds=pipreadmods.pipread(filename0,tstep=t,vararrin=['bx','by','bz'])
+    ds=pipreadmods.pipread(filename0,tstep=t,vararrin=['bx','by','bz','eta'])
     
     dxm = ds['xgrid'][1] - ds['xgrid'][0]
     dym = ds['ygrid'][1] - ds['ygrid'][0]
@@ -33,27 +30,16 @@ for t in range(0,2):
     jx = np.gradient(ds['bz'], dym, axis=1) - np.gradient(ds['by'], dzm, axis=0)
     jy = np.gradient(ds['bx'], dzm, axis=0) - np.gradient(ds['bz'], dxm, axis=2)
     jtot2 = np.power(jz,2.0) + np.power(jy,2.0) +np.power(jx,2.0)
-    
-    for x in range(7,550):
-        for y in range(7,550):
-            for z in range(7,1094):
-                if np.sqrt(jtot2[z,y,x]) < 5:
-                    ohm = eta0*jtot2[z,y,x]
-                else:
-                    ohm = eta1*jtot2[z,y,x]
-        
-    ohm_element = np.sum(ohm)*dxm*dym*dzm
+
+    ohm_element=np.sum(ds['eta']*jtot2)*dxm*dym*dzm
     ohm0.append(ohm_element)
     
     time0.append(ds['time'])
     
-for t in range(0,2):
+for t in range(0,5):
     print(t)
-    eta0 = 0.0001
-    eta1 = 0.001
     
     ## PIP case ##
-    
     ds=pipreadmods.pipread(filename1,tstep=t,vararrin=['bx','by','bz'])
     
     dxm = ds['xgrid'][1] - ds['xgrid'][0]
@@ -63,23 +49,15 @@ for t in range(0,2):
     jx = np.gradient(ds['bz'], dym, axis=1) - np.gradient(ds['by'], dzm, axis=0)
     jy = np.gradient(ds['bx'], dzm, axis=0) - np.gradient(ds['bz'], dxm, axis=2)
     jtot2 = np.power(jz,2.0) + np.power(jy,2.0) +np.power(jx,2.0)
-    
-    for x in range(7,550):
-        for y in range(7,550):
-            for z in range(7,1094):
-                if np.sqrt(jtot2[z,y,x]) < 5:
-                    ohm = eta0*jtot2[z,y,x]
-                else:
-                    ohm = eta1*jtot2[z,y,x]
         
-    ohm_element = np.sum(ohm)*dxm*dym*dzm
+    ohm_element=np.sum(ds['eta']*jtot2)*dxm*dym*dzm
     ohm1.append(ohm_element)
     
     time1.append(ds['time'])
     
 ## Frictional heating ##
 
-for t in range(0,2):
+for t in range(0,5):
     print(t)
     
     ## PIP case ##
@@ -101,6 +79,8 @@ for t in range(0,2):
 
     fric_element = np.sum(0.5*alpha*ds['ro_n'][7:1094,7:550,7:550]*ds['ro_p'][7:1094,7:550,7:550]*vD)*dxm*dym*dzm
     fric1.append(fric_element)
+
+    time1.append(ds['time'])
 
 fig,ax=plt.subplots(1,1,dpi=300,constrained_layout=True)
 fig.set_size_inches(9.7,6.0)
