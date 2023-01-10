@@ -17,7 +17,7 @@ time1 = []
 
 ## Ohmic heating##
 
-for t in range(0,5):
+for t in range(0,115):
     print(t)
     
     ## MHD case ##
@@ -36,11 +36,11 @@ for t in range(0,5):
     
     time0.append(ds['time'])
     
-for t in range(0,5):
+for t in range(0,31):
     print(t)
     
     ## PIP case ##
-    ds=pipreadmods.pipread(filename1,tstep=t,vararrin=['bx','by','bz'])
+    ds=pipreadmods.pipread(filename1,tstep=t,vararrin=['bx','by','bz','eta'])
     
     dxm = ds['xgrid'][1] - ds['xgrid'][0]
     dym = ds['ygrid'][1] - ds['ygrid'][0]
@@ -57,7 +57,7 @@ for t in range(0,5):
     
 ## Frictional heating ##
 
-for t in range(0,5):
+for t in range(0,31):
     print(t)
     
     ## PIP case ##
@@ -80,13 +80,11 @@ for t in range(0,5):
     fric_element = np.sum(0.5*alpha*ds['ro_n'][7:1094,7:550,7:550]*ds['ro_p'][7:1094,7:550,7:550]*vD)*dxm*dym*dzm
     fric1.append(fric_element)
 
-    time1.append(ds['time'])
-
 fig,ax=plt.subplots(1,1,dpi=300,constrained_layout=True)
 fig.set_size_inches(9.7,6.0)
 
 ax.set_ylim(0,2)
-ax.set_xlim(0,27)
+ax.set_xlim(0,115)
 ax.plot(time1,fric1, label = "Frictional heating (P1)")
 ax.plot(time0,ohm0, label = "Ohmic heating (M1)")
 ax.plot(time1,ohm1, label = "Ohmic heating (P1)")
