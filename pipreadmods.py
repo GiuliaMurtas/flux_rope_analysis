@@ -65,7 +65,15 @@ def pipread(fname,tstep=-1,vararrin='all',exrates=0):
                 vararr.append('by')
                 vararr.append('bz')
                 vararr.append('en_p')
-#        vararr=vararrin
+            if param=='pr_n':
+                vararr.append('ro_n')
+                vararr.append('mx_n')
+                vararr.append('my_n')
+                vararr.append('mz_n')
+                vararr.append('bx')
+                vararr.append('by')
+                vararr.append('bz')
+                vararr.append('en_n')
         vararr.append('xgrid')
         vararr.append('ygrid')
         vararr.append('zgrid')
