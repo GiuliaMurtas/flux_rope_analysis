@@ -42,7 +42,7 @@ fig.set_size_inches(9.7,6.0)
 
 ax.set_ylim(0,1.5)
 ax.set_xlim(0,10)
-ax.plot(time0,Tp_m1,color='black', linestyle='dashed', label = "Mean T$_p$ (M1)")
+ax.plot(time0,Tp_m1,color='black', label = "Mean T$_p$ (M1)")
 ax.plot(time1,Tp_p1,color='blue', linestyle='dashed', label = "Mean T$_p$ (P1)")
 ax.plot(time1,Tn_p1,color='red', linestyle='dashed', label = "Mean T$_n$ (P1)")
 ax.set_ylabel('Mean temperatures')
