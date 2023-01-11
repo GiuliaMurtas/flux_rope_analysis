@@ -73,9 +73,9 @@ for t in range(0,1):
     
 ## 2D plot - current density mosaic ##
 
-ds0=pipreadmods.pipread(filename,tstep=0,vararrin=['bx','by','bz'])
-ds1=pipreadmods.pipread(filename,tstep=10,vararrin=['bx','by','bz'])
-ds2=pipreadmods.pipread(filename,tstep=20,vararrin=['bx','by','bz'])
+ds0=pipreadmods.pipread(filename,tstep=60,vararrin=['bx','by','bz'])
+ds1=pipreadmods.pipread(filename,tstep=85,vararrin=['bx','by','bz'])
+ds2=pipreadmods.pipread(filename,tstep=110,vararrin=['bx','by','bz'])
 
 ds3=pipreadmods.pipread(filename1,tstep=0,vararrin=['bx','by','bz'])
 ds4=pipreadmods.pipread(filename1,tstep=10,vararrin=['bx','by','bz'])
@@ -120,23 +120,54 @@ jy5 = np.gradient(ds5['bx'], dzm, axis=0) - np.gradient(ds5['bz'], dxm, axis=2)
 jtot5 = np.sqrt(np.power(jz5,2.0) + np.power(jy5,2.0) +np.power(jx5,2.0))
     
 fig,(ax)=plt.subplots(3,2,dpi=300)
-ax.axis('equal')
-ax.set(xlim=(-1, 1), ylim=(-1, 1))
 fig.set_size_inches(9.7,9.7)
 fig.add_gridspec(3,hspace=0)
 
 ax[0,0].contourf(ds0['xgrid'],ds0['ygrid'],jtot0[551,:,:],levels=101,cmap='OrRd',vmin=0,vmax=5)
-
-    for item in ([ax.xaxis.label, ax.yaxis.label] +
-                ax.get_xticklabels() + ax.get_yticklabels()):
-        item.set_fontsize(12)
-    ax.title.set_fontsize(16)
-
-    fig.subplots_adjust(right=0.8)
-    cbar_ax = fig.add_axes([0.82, 0.2, 0.02, 0.6])
-    cbar = fig.colorbar(cp, cax=cbar_ax,label='|$J_{TOT}$|')
-ax[0,0].set_title('MHD')
-ax[0,0].set_xlabel('x')
+for item in ([ax[0,0].xaxis.label, ax[0,0].yaxis.label] +
+    ax[0,0].get_xticklabels() + ax[0,0].get_yticklabels()):
+    item.set_fontsize(12)
+ax[0,0].set_title('MHD ($\alpha_{c} \rightarrow \infty$)')
 ax[0,0].set_ylabel('y')
-    
-    
+ax[0,0].title.set_fontsize(16)
+ax[0,0].text(0.8, 0.8, r't = 60', fontsize=10)
+ax[0,0].axis('equal')
+ax[0,0].set(xlim=(-1, 1), ylim=(-1, 1))
+
+ax[1,0].contourf(ds1['xgrid'],ds1['ygrid'],jtot1[551,:,:],levels=101,cmap='OrRd',vmin=0,vmax=5)
+for item in ([ax[1,0].xaxis.label, ax[1,0].yaxis.label] +
+    ax[1,0].get_xticklabels() + ax[1,0].get_yticklabels()):
+    item.set_fontsize(12)
+ax[1,0].set_ylabel('y')
+ax[1,0].text(0.8, 0.8, r't = 85', fontsize=10)
+ax[1,0].axis('equal')
+ax[1,0].set(xlim=(-1, 1), ylim=(-1, 1))
+
+ax[2,0].contourf(ds2['xgrid'],ds2['ygrid'],jtot2[551,:,:],levels=101,cmap='OrRd',vmin=0,vmax=5)
+for item in ([ax[2,0].xaxis.label, ax[2,0].yaxis.label] +
+    ax[2,0].get_xticklabels() + ax[2,0].get_yticklabels()):
+    item.set_fontsize(12)
+ax[2,0].set_xlabel('x')
+ax[2,0].set_ylabel('y')
+ax[2,0].text(0.8, 0.8, r't = 110', fontsize=10)
+ax[2,0].axis('equal')
+ax[2,0].set(xlim=(-1, 1), ylim=(-1, 1))
+
+ax[0,1].contourf(ds0['xgrid'],ds0['ygrid'],jtot0[551,:,:],levels=101,cmap='OrRd',vmin=0,vmax=5)
+for item in ([ax[0,1].xaxis.label, ax[0,1].yaxis.label] +
+    ax[0,1].get_xticklabels() + ax[0,1].get_yticklabels()):
+    item.set_fontsize(12)
+cbar_ax = fig.add_axes([0.82, 0.2, 0.02, 0.6])
+cbar = fig.colorbar(ax[0,1], cax=cbar_ax,label='|$J_{TOT}$|')
+ax[0,1].set_title('PIP ($\alpha_{c} = 1$)')
+ax[0,1].set_ylabel('y')
+ax[0,1].title.set_fontsize(16)
+ax[0,1].text(0.8, 0.8, r't = 0', fontsize=10)
+ax[0,1].axis('equal')
+ax[0,1].set(xlim=(-1, 1), ylim=(-1, 1))
+
+#for axs in ax:
+#    axs.label_outer()
+
+plt.show()
+plt.savefig("J_mosaic.pdf")
