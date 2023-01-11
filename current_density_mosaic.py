@@ -5,9 +5,6 @@ import numpy as np
 import matplotlib.pyplot as plt
 import pipreadmods
 
-x = []
-y = []
-
 filename = "/global/cscratch1/sd/gmurtas/PIP_data/kink_MHD_1/"
 filename1 = "/global/cscratch1/sd/gmurtas/PIP_data/kink_PIP_1/"
 
