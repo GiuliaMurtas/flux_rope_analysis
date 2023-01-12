@@ -132,7 +132,7 @@ fig.set_size_inches(9.7,6.0)
 
 for t in range(0,2):
     print(t)
-    ds=pipreadmods.pipread(filename1,tstep=t,vararrin=['ro_n','ro_p','vx_p','vy_p','vz_p','vx_n','vy_n','vz_n'])
+    ds=pipreadmods.pipread(filename1,tstep=t,vararrin=['pr_n','pr_p','ro_n','ro_p','vx_p','vy_p','vz_p','vx_n','vy_n','vz_n'])
     
     dxm = ds['xgrid'][1] - ds['xgrid'][0]
     dym = ds['ygrid'][1] - ds['ygrid'][0]
@@ -158,7 +158,7 @@ for t in range(0,2):
 
 for t in range(0,2):
     print(t)
-    ds=pipreadmods.pipread(filename2,tstep=t,vararrin=['ro_n','ro_p','vx_p','vy_p','vz_p','vx_n','vy_n','vz_n'])
+    ds=pipreadmods.pipread(filename2,tstep=t,vararrin=['pr_n','pr_p','ro_n','ro_p','vx_p','vy_p','vz_p','vx_n','vy_n','vz_n'])
     
     dxm = ds['xgrid'][1] - ds['xgrid'][0]
     dym = ds['ygrid'][1] - ds['ygrid'][0]
