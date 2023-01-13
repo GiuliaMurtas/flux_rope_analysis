@@ -12,7 +12,10 @@ This repository collects a set of scripts employed for the analysis of kink unst
 #### Current density profiles
 
 1.  The script `current_density_frames.py` saves frames of the current density magnitude captured at the centre of the flux rope. This particular script was generated in order to produce animations.
-2.  The script `current_density_mosaic.py` produces two figures. The first figure is a 1D plot of the initial conditions for the magnetic field components $B_y$ and $B_z$ and the current density components $J_y$ and $J_z$ as a function of the $x$ direction. The second figure is a mosaic of 2D frames of the current density magnitude captured at the centre of the flux rope of both MHD and PIP simulations.
+2.  The script `current_density_mosaic.py` produces three figures:
+  - The first figure is a 1D plot of the initial conditions ($t = 0$) for the magnetic field components $B_y$ and $B_z$ and the current density components $J_y$ and $J_z$ as a function of the $x$ direction.
+  - The second figure is a 2D plot of the initial conditions ($t = 0$) for the magnetic field components $B_y$ and $B_z$ and the current density components $J_y$ and $J_z$ in the $xy$-plane at the centre of the flux rope.
+  - The thrid figure is a mosaic of 2D frames of the current density magnitude captured at the centre of the flux rope of both MHD and PIP simulations.
 
 #### Analysis of ionisation-recombination processes
 
