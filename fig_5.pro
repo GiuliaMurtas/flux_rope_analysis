@@ -142,8 +142,8 @@ a4[1].tickname=['','','','']
 bar1=COLORBAR(TARGET=cd,rgb_table=69,ORIENTATION=0,position=[0.07,0.1,0.21,0.15],TEXTPOS = 0,major=3,taper=0,FONT_SIZE=18, range=[-0.15,0.15],TICKVALUES=[-0.1,0.0,0.1],TICKNAME=['-0.1','0.0','0.1'])
 bar2=COLORBAR(TARGET=ce,rgb_table=59,ORIENTATION=0,position=[0.25,0.1,0.39,0.15],TEXTPOS = 0,major=3,taper=0,FONT_SIZE=18, range=[0,0.19],TICKVALUES=[0,0.09,0.18],TICKNAME=['0.0','0.09','0.18'])
 bar3=COLORBAR(TARGET=cf,rgb_table=56,ORIENTATION=0,position=[0.43,0.1,0.57,0.15],TEXTPOS = 0,major=3,taper=0,FONT_SIZE=18, range=[0,5],TICKVALUES=[0,2.5,5],TICKNAME=['0.0','2.5','5'])
-bar4=COLORBAR(TARGET=c3,rgb_table=60,ORIENTATION=0,position=[0.61,0.1,0.75,0.15],TEXTPOS = 0,major=3,taper=0,FONT_SIZE=18, range=[0,5],TICKVALUES=[0,0.5,1],TICKNAME=['0.0','0.5','1.0'])
-bar5=COLORBAR(TARGET=c4,rgb_table=57,ORIENTATION=0,position=[0.79,0.1,0.93,0.15],TEXTPOS = 0,major=3,taper=0,FONT_SIZE=18, range=[0,5],TICKVALUES=[0,0.5,1],TICKNAME=['0.0','0.5','1.0'])
+bar4=COLORBAR(TARGET=c3,rgb_table=60,ORIENTATION=0,position=[0.61,0.1,0.75,0.15],TEXTPOS = 0,major=3,taper=0,FONT_SIZE=18, range=[0,1],TICKVALUES=[0,0.5,1],TICKNAME=['0.0','0.5','1.0'])
+bar5=COLORBAR(TARGET=c4,rgb_table=57,ORIENTATION=0,position=[0.79,0.1,0.93,0.15],TEXTPOS = 0,major=3,taper=0,FONT_SIZE=18, range=[0,1],TICKVALUES=[0,0.5,1],TICKNAME=['0.0','0.5','1.0'])
 
 ca.save,'fig_5.jpg'
 
