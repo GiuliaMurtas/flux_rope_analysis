@@ -80,6 +80,10 @@ levels2=findgen(201)/200*0.01+0.0	; color scale for collisional frictional heati
 levels3=findgen(201)/200*0.2+0.0	; color scale for Ohmic heating
 levels4=findgen(201)/200*0.1+0.0	; color scale for temperatures
 
+print,'Max Tn = ',max(Tn_1_2)
+print,'Max Tp = ',max(Tp_1_2)
+print,'Max FH2 = ',max(fh2_2)
+
 ; ## Neutral temperature panels ##
 
 w=window(dimension=[1980,1080],/buffer)
