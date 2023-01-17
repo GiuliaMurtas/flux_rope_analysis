@@ -77,7 +77,7 @@ restore,'vd_PIP_1.sav'
 
 levels2=findgen(201)/200*0.01+0.0	; color scale for frictional heating components
 levels3=findgen(201)/200*0.2+0.0	; color scale for Ohmic heating
-levels4=findgen(201)/200*0.0+0.5	; color scale for temperatures
+levels4=findgen(201)/200*0.0+0.1	; color scale for temperatures
 
 ; ## Neutral temperature panels ##
 
@@ -89,7 +89,7 @@ cb=contour(reform(Tn_1_1)>levels4[0]+0.0001,x,y,c_value=levels4,/fill,xstyle=1,y
 
 cc=contour(reform(Tn_1_2)>levels4[0]+0.0001,x,y,c_value=levels4,/fill,xstyle=1,ystyle=1,xr=[-1.,1.],yr=[-1.,1.],rgb_table=52,aspect_ratio=1, AXIS_STYLE=2,col=0,xtitle='x',ytitle='y',xtickfont_size=18,ytickfont_size=18,C_LABEL_SHOW=0,position=[0.05,0.05,0.23,0.35],/current)
 
-bar=COLORBAR(TARGET=ca,rgb_table=52,ORIENTATION=0,position=[0.07,0.96,0.21,0.98],TEXTPOS = 1,major=2,taper=0,FONT_SIZE=18,TITLE='$T_n$',range=[0.0,0.5],TICKVALUES=[0.2,0.4],TICKNAME=['0.2','0.4'])
+bar=COLORBAR(TARGET=ca,rgb_table=52,ORIENTATION=0,position=[0.07,0.96,0.21,0.98],TEXTPOS = 1,major=2,taper=0,FONT_SIZE=18,TITLE='$T_n$',range=[0.0,0.1],TICKVALUES=[0.05,0.1],TICKNAME=['0.05','0.1'])
 
 aa=ca.axes
 aa[0].tickvalue=[-0.5,-0,0.5]
@@ -111,7 +111,7 @@ ce=contour(reform(Tp_1_1)>levels4[0]+0.0001,x,y,c_value=levels4,/fill,xstyle=1,y
 
 cf=contour(reform(Tp_1_2)>levels4[0]+0.0001,x,y,c_value=levels4,/fill,xstyle=1,ystyle=1,xr=[-1.,1.],yr=[-1.,1.],rgb_table=55,aspect_ratio=1, AXIS_STYLE=2,col=0,xtitle='x',xtickfont_size=18,ytickfont_size=18,C_LABEL_SHOW=0,position=[0.23,0.05,0.41,0.35],/current)
 
-bar2=COLORBAR(TARGET=cd,rgb_table=55,ORIENTATION=0,position=[0.25,0.96,0.39,0.98],TEXTPOS = 1,major=2,taper=0,FONT_SIZE=18,TITLE='$T_p$',range=[0.0,0.5],TICKVALUES=[0.2,0.4],TICKNAME=['0.2','0.4'])
+bar2=COLORBAR(TARGET=cd,rgb_table=55,ORIENTATION=0,position=[0.25,0.96,0.39,0.98],TEXTPOS = 1,major=2,taper=0,FONT_SIZE=18,TITLE='$T_p$',range=[0.0,0.1],TICKVALUES=[0.05,0.1],TICKNAME=['0.05','0.1'])
 
 ad=cd.axes
 ad[0].tickvalue=[-0.5,-0,0.5]
