@@ -75,9 +75,10 @@ restore,'fh_PIP_1.sav'
 restore,'oh_PIP_1.sav'
 restore,'vd_PIP_1.sav'
 
-levels2=findgen(201)/200*0.01+0.0	; color scale for frictional heating components
+levels1=findgen(201)/200*0.001+0.0	; color scale for ion/rec frictional heating
+levels2=findgen(201)/200*0.01+0.0	; color scale for collisional frictional heating
 levels3=findgen(201)/200*0.2+0.0	; color scale for Ohmic heating
-levels4=findgen(201)/200*0.0+0.1	; color scale for temperatures
+levels4=findgen(201)/200*0.1+0.0	; color scale for temperatures
 
 ; ## Neutral temperature panels ##
 
@@ -165,7 +166,7 @@ c2=contour(reform(fh2_1)>levels2[0]+0.0001,x,y,c_value=levels2,/fill,xstyle=1,ys
 
 c3=contour(reform(fh2_2)>levels2[0]+0.0001,x,y,c_value=levels2,/fill,xstyle=1,ystyle=1,xr=[-1.,1.],yr=[-1.,1.],rgb_table=51,aspect_ratio=1, AXIS_STYLE=2,col=0,xtitle='x',xtickfont_size=18,ytickfont_size=18,C_LABEL_SHOW=0,position=[0.59,0.05,0.77,0.35],/current)
 
-bara=COLORBAR(TARGET=c3,rgb_table=51,ORIENTATION=0,position=[0.61,0.96,0.75,0.98],TEXTPOS = 1,major=3,taper=0,FONT_SIZE=18,TITLE='$FH_2$',range=[0,0.01],TICKVALUES=[0.0,0.005,0.01],TICKNAME=['0.0','0.005','0.01'])
+bara=COLORBAR(TARGET=c3,rgb_table=51,ORIENTATION=0,position=[0.61,0.96,0.75,0.98],TEXTPOS = 1,major=3,taper=0,FONT_SIZE=18,TITLE='$FH_2$',range=[0,0.001],TICKVALUES=[0.0,0.0005,0.001],TICKNAME=['0.0','0.0005','0.001'])
 
 a1=c1.axes
 a1[0].tickvalue=[-0.5,-0,0.5]
