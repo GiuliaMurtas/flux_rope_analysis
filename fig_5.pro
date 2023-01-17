@@ -111,9 +111,9 @@ ce=contour(reform(sqrt(vd))>levels1[0]+0.0001,x,y,c_value=levels1,/fill,xstyle=1
 
 cf=contour(reform(J)>levels2[0]+0.0001,x,y,c_value=levels2,/fill,xstyle=1,ystyle=1,xr=[-0.6,0.3],yr=[0.2,0.9],rgb_table=56,aspect_ratio=1, AXIS_STYLE=2,col=0,xtitle='x',xtickfont_size=20,ytickfont_size=20,font_size=20,C_LABEL_SHOW=0,position=[0.41,0.2,0.59,0.55],/current)
 
-c3=contour(reform(ion),x,y,/fill,xstyle=1,ystyle=1,xr=[-0.6,0.3],yr=[0.2,0.9],rgb_table=60,aspect_ratio=1, AXIS_STYLE=2,col=0,xtitle='x',xtickfont_size=20,ytickfont_size=20,font_size=20,C_LABEL_SHOW=0,position=[0.59,0.2,0.77,0.55],/current)
+c3=contour(reform(alog10(ion)),x,y,/fill,xstyle=1,ystyle=1,xr=[-0.6,0.3],yr=[0.2,0.9],rgb_table=60,aspect_ratio=1, AXIS_STYLE=2,col=0,xtitle='x',xtickfont_size=20,ytickfont_size=20,font_size=20,C_LABEL_SHOW=0,position=[0.59,0.2,0.77,0.55],/current)
 
-c4=contour(reform(rec),x,y,/fill,xstyle=1,ystyle=1,xr=[-0.6,0.3],yr=[0.2,0.9],rgb_table=57,aspect_ratio=1, AXIS_STYLE=2,col=0,xtitle='x',xtickfont_size=20,ytickfont_size=20,font_size=20,C_LABEL_SHOW=0,position=[0.77,0.2,0.95,0.55],/current)
+c4=contour(reform(alog10(rec)),x,y,/fill,xstyle=1,ystyle=1,xr=[-0.6,0.3],yr=[0.2,0.9],rgb_table=57,aspect_ratio=1, AXIS_STYLE=2,col=0,xtitle='x',xtickfont_size=20,ytickfont_size=20,font_size=20,C_LABEL_SHOW=0,position=[0.77,0.2,0.95,0.55],/current)
 
 ad=cd.axes
 ad[0].tickvalue=[-0.4,-0.2,0.0,0.2]
