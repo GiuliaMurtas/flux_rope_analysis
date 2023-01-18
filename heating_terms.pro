@@ -29,100 +29,100 @@ time2 = []
 
 ;# MHD case - M1 ##
 if popul eq 1 then begin
-for t =0,20 do begin
+for t =0,20 do begin ;20
     print,t
-    rdmpi,ds,datapath=filename0,time_step=t,vararrin=['bx','by','bz'],/current
+    rdmpi,ds,datapath=filename0,time_step=t,var=['bx','by','bz'],/current
     
     dxm = ds.x[1] - ds.x[0]
     dym = ds.y[1] - ds.y[0]
     dzm = ds.z[1] - ds.z[0]
-    jtot2 = jz^2 + jy^2 +jx^2
+    jtot2 = ds.j_z^2 + ds.j_y^2 +ds.j_x^2
 
-    ohm_element=total(ds['eta'][7:874,7:502,7:502]*jtot2[7:874,7:502,7:502])*dxm*dym*dzm
+    ohm_element=total(ds.eta[7:502,7:502,7:874]*jtot2[7:502,7:502,7:874])*dxm*dym*dzm
     ohm0=[ohm0,ohm_element]
-    time0=[time0,ds.time[0]]
+    time0=[time0,ds.t[0]]
     
-    rdmpi,ds,datapath=filename0,time_step=t,vararrin=['pr_p','ro_p']
+    rdmpi,ds,datapath=filename0,time_step=t,var=['pr_p','ro_p']
     
-    Tp = (5.0/6.0)*(ds.pr_p[7:874,7:502,7:502]/ds.ro_p[7:874,7:502,7:502])
+    Tp = (5.0/6.0)*(ds.pr_p[7:502,7:502,7:874]/ds.ro_p[7:502,7:502,7:874])
     
     meanTp=mean(Tp)
     meantp0=[meantp0,meanTp]
 endfor
     
 ;## PIP case - P1 ##
-for t =0,18 do begin
+for t =0,18 do begin ;18
     print,t
-    rdmpi,ds,datapath=filename1,time_step=t,vararrin=['bx','by','bz'],/current
+    rdmpi,ds,datapath=filename1,time_step=t,var=['bx','by','bz'],/current
     
     dxm = ds.x[1] - ds.x[0]
     dym = ds.y[1] - ds.y[0]
     dzm = ds.z[1] - ds.z[0]
-    jtot2 = jz^2 + jy^2 +jx^2
+    jtot2 = ds.j_z^2 + ds.j_y^2 +ds.j_x^2
 
-    ohm_element=total(ds['eta'][7:874,7:502,7:502]*jtot2[7:874,7:502,7:502])*dxm*dym*dzm
+    ohm_element=total(ds.eta[7:502,7:502,7:874]*jtot2[7:502,7:502,7:874])*dxm*dym*dzm
     ohm1=[ohm1,ohm_element]
-    time1=[time1,ds.time[0]]
+    time1=[time1,ds.t[0]]
 
 endfor
 
 ;## PIP case - P2 ##
-for t =0,19 do begin
+for t =0,19 do begin ;19
     print,t
-    rdmpi,ds,datapath=filename2,time_step=t,vararrin=['bx','by','bz'],/current
+    rdmpi,ds,datapath=filename2,time_step=t,var=['bx','by','bz'],/current
     
     dxm = ds.x[1] - ds.x[0]
     dym = ds.y[1] - ds.y[0]
     dzm = ds.z[1] - ds.z[0]
-    jtot2 = jz^2 + jy^2 +jx^2
+    jtot2 = ds.j_z^2 + ds.j_y^2 +ds.j_x^2
 
-    ohm_element=total(ds['eta'][7:874,7:502,7:502]*jtot2[7:874,7:502,7:502])*dxm*dym*dzm
+    ohm_element=total(ds.eta[7:502,7:502,7:874]*jtot2[7:502,7:502,7:874])*dxm*dym*dzm
     ohm2=[ohm2,ohm_element]
-    time2=[time2,ds.time[0]]
+    time2=[time2,ds.t[0]]
 
 endfor   
-save,ohm0,ohm1,ohm2,time0,time1,time2,filename='fig_8_oh.sav'
+save,ohm0,ohm1,ohm2,meanTp0,time0,time1,time2,filename='fig_8_oh.sav'
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;    
 ;## Collisional frictional heating ##
 
 ;## PIP case - P1 ##
-for t =0,18 do begin
+for t =0,18 do begin ;18
     print,t
-    rdmpi,ds,datapath=filename1,time_step=t,vararrin=['pr_n','pr_p','ro_n','ro_p','vx_p','vy_p','vz_p','vx_n','vy_n','vz_n']
+    rdmpi,ds,datapath=filename1,time_step=t,var=['pr_n','pr_p','ro_n','ro_p','vx_p','vy_p','vz_p','vx_n','vy_n','vz_n']
 
     dxm = ds.x[1] - ds.x[0]
     dym = ds.y[1] - ds.y[0]
     dzm = ds.z[1] - ds.z[0]
         
-    Tn = (5.0/3.0)*(ds.pr_n[7:874,7:502,7:502]/ds.ro_n[7:874,7:502,7:502])
-    Tp = (5.0/6.0)*(ds.pr_p[7:874,7:502,7:502]/ds.ro_p[7:874,7:502,7:502])
+    Tn = (5.0/3.0)*(ds.pr_n[7:502,7:502,7:874]/ds.ro_n[7:502,7:502,7:874])
+    Tp = (5.0/6.0)*(ds.pr_p[7:502,7:502,7:874]/ds.ro_p[7:502,7:502,7:874])
     
     meanTp=mean(Tp)
     meanTn=mean(Tn)
     meantp1=[meantp1,meanTp]
     meantn1=[meantn1,meanTn]
     
-    vD = (ds.vx_n[7:874,7:502,7:502]-ds.vx_p[7:874,7:502,7:502])^2 $
-    + (ds.vy_n[7:874,7:502,7:502]-ds.vy_p[7:874,7:502,7:502])^2 $
-    + (ds,vz_n[7:874,7:502,7:502]-ds,vz_p[7:874,7:502,7:502])^2
+    vD = (ds.vx_n[7:502,7:502,7:874]-ds.vx_p[7:502,7:502,7:874])^2 $
+    + (ds.vy_n[7:502,7:502,7:874]-ds.vy_p[7:502,7:502,7:874])^2 $
+    + (ds.vz_n[7:502,7:502,7:874]-ds.vz_p[7:502,7:502,7:874])^2
     
     alpha = 1.0*sqrt(0.5*(Tn+Tp))*sqrt(1 + (9*!pi/64.0)*(5.0/6.0)*(vD/(Tn+Tp)))
 
-    fric_element = total(0.5*alpha*ds.ro_n[7:874,7:502,7:502]*ds.ro_p[7:874,7:502,7:502]*vD)*dxm*dym*dzm
+    fric_element = total(0.5*alpha*ds.ro_n[7:502,7:502,7:874]*ds.ro_p[7:502,7:502,7:874]*vD)*dxm*dym*dzm
     fric1=[fric1,fric_element]
     
-    vp2 = ds.vx_p[7:874,7:502,7:502]^2 + ds.vy_p[7:874,7:502,7:502]^2 $
-    + ds.vz_p[7:874,7:502,7:502]^2
-    vn2 = ds.vx_n[7:874,7:502,7:502]^2 + ds.vy_n[7:874,7:502,7:502]^2 $
-    + ds.vz_n[7:874,7:502,7:502]^2
-    vnvp = ds.vx_n[7:874,7:502,7:502]*ds.vx_p[7:874,7:502,7:502] $
-    + ds.vy_n[7:874,7:502,7:502]*ds.vy_p[7:874,7:502,7:502] $
-    + ds.vz_n[7:874,7:502,7:502]*ds.vz_p[7:874,7:502,7:502]
+    vp2 = ds.vx_p[7:502,7:502,7:874]^2 + ds.vy_p[7:502,7:502,7:874]^2 $
+    + ds.vz_p[7:502,7:502,7:874]^2
+    vn2 = ds.vx_n[7:502,7:502,7:874]^2 + ds.vy_n[7:502,7:502,7:874]^2 $
+    + ds.vz_n[7:502,7:502,7:874]^2
+    vnvp = ds.vx_n[7:502,7:502,7:874]*ds.vx_p[7:502,7:502,7:874] $
+    + ds.vy_n[7:502,7:502,7:874]*ds.vy_p[7:502,7:502,7:874] $
+    + ds.vz_n[7:502,7:502,7:874]*ds.vz_p[7:502,7:502,7:874]
     
-    ir_element = ds.rec[7:874,7:502,7:502]*ds.ro_p[7:874,7:502,7:502]*vp2 $
-    - (ds.rec[7:874,7:502,7:502]*ds.ro_p[7:874,7:502,7:502] $
-    + ds.ion[7:874,7:502,7:502]*ds.ro_n[7:874,7:502,7:502])*vnvp $
-    + ds.ion[7:874,7:502,7:502]*ds.ro_n[7:874,7:502,7:502]*vn2
+    ir_element = ds.rec[7:502,7:502,7:874]*ds.ro_p[7:502,7:502,7:874]*vp2 $
+    - (ds.rec[7:502,7:502,7:874]*ds.ro_p[7:502,7:502,7:874] $
+    + ds.ion[7:502,7:502,7:874]*ds.ro_n[7:502,7:502,7:874])*vnvp $
+    + ds.ion[7:502,7:502,7:874]*ds.ro_n[7:502,7:502,7:874]*vn2
 
     ir = total(ir_element)*dxm*dym*dzm
     ir1=[ir1,ir]
@@ -130,43 +130,43 @@ endfor
     
 
 ;## PIP case - P2 ##
-for t =0,19 do begin
+for t =0,19 do begin ;19
     print,t
-    rdmpi,ds,datapath=filename2,time_step=t,vararrin=['pr_n','pr_p','ro_n','ro_p','vx_p','vy_p','vz_p','vx_n','vy_n','vz_n']
+    rdmpi,ds,datapath=filename2,time_step=t,var=['pr_n','pr_p','ro_n','ro_p','vx_p','vy_p','vz_p','vx_n','vy_n','vz_n']
 
     dxm = ds.x[1] - ds.x[0]
     dym = ds.y[1] - ds.y[0]
     dzm = ds.z[1] - ds.z[0]
         
-    Tn = (5.0/3.0)*(ds.pr_n[7:874,7:502,7:502]/ds.ro_n[7:874,7:502,7:502])
-    Tp = (5.0/6.0)*(ds.pr_p[7:874,7:502,7:502]/ds.ro_p[7:874,7:502,7:502])
+    Tn = (5.0/3.0)*(ds.pr_n[7:502,7:502,7:874]/ds.ro_n[7:502,7:502,7:874])
+    Tp = (5.0/6.0)*(ds.pr_p[7:502,7:502,7:874]/ds.ro_p[7:502,7:502,7:874])
     
     meanTp=mean(Tp)
     meanTn=mean(Tn)
     meantp2=[meantp2,meanTp]
     meantn2=[meantn2,meanTn]
         
-    vD = (ds.vx_n[7:874,7:502,7:502]-ds.vx_p[7:874,7:502,7:502])^2 $
-    + (ds.vy_n[7:874,7:502,7:502]-ds.vy_p[7:874,7:502,7:502])^2 $
-    + (ds,vz_n[7:874,7:502,7:502]-ds,vz_p[7:874,7:502,7:502])^2
+    vD = (ds.vx_n[7:502,7:502,7:874]-ds.vx_p[7:502,7:502,7:874])^2 $
+    + (ds.vy_n[7:502,7:502,7:874]-ds.vy_p[7:502,7:502,7:874])^2 $
+    + (ds.vz_n[7:502,7:502,7:874]-ds.vz_p[7:502,7:502,7:874])^2
     
     alpha = 1.0*sqrt(0.5*(Tn+Tp))*sqrt(1 + (9*!pi/64.0)*(5.0/6.0)*(vD/(Tn+Tp)))
 
-    fric_element = total(0.5*alpha*ds.ro_n[7:874,7:502,7:502]*ds.ro_p[7:874,7:502,7:502]*vD)*dxm*dym*dzm
+    fric_element = total(0.5*alpha*ds.ro_n[7:502,7:502,7:874]*ds.ro_p[7:502,7:502,7:874]*vD)*dxm*dym*dzm
     fric2=[fric2,fric_element]
     
-    vp2 = ds.vx_p[7:874,7:502,7:502]^2 + ds.vy_p[7:874,7:502,7:502]^2 $
-    + ds.vz_p[7:874,7:502,7:502]^2
-    vn2 = ds.vx_n[7:874,7:502,7:502]^2 + ds.vy_n[7:874,7:502,7:502]^2 $
-    + ds.vz_n[7:874,7:502,7:502]^2
-    vnvp = ds.vx_n[7:874,7:502,7:502]*ds.vx_p[7:874,7:502,7:502] $
-    + ds.vy_n[7:874,7:502,7:502]*ds.vy_p[7:874,7:502,7:502] $
-    + ds.vz_n[7:874,7:502,7:502]*ds.vz_p[7:874,7:502,7:502]
+    vp2 = ds.vx_p[7:502,7:502,7:874]^2 + ds.vy_p[7:502,7:502,7:874]^2 $
+    + ds.vz_p[7:502,7:502,7:874]^2
+    vn2 = ds.vx_n[7:502,7:502,7:874]^2 + ds.vy_n[7:502,7:502,7:874]^2 $
+    + ds.vz_n[7:502,7:502,7:874]^2
+    vnvp = ds.vx_n[7:502,7:502,7:874]*ds.vx_p[7:502,7:502,7:874] $
+    + ds.vy_n[7:502,7:502,7:874]*ds.vy_p[7:502,7:502,7:874] $
+    + ds.vz_n[7:502,7:502,7:874]*ds.vz_p[7:502,7:502,7:874]
     
-    ir_element = ds.rec[7:874,7:502,7:502]*ds.ro_p[7:874,7:502,7:502]*vp2 $
-    - (ds.rec[7:874,7:502,7:502]*ds.ro_p[7:874,7:502,7:502] $
-    + ds.ion[7:874,7:502,7:502]*ds.ro_n[7:874,7:502,7:502])*vnvp $
-    + ds.ion[7:874,7:502,7:502]*ds.ro_n[7:874,7:502,7:502]*vn2
+    ir_element = ds.rec[7:502,7:502,7:874]*ds.ro_p[7:502,7:502,7:874]*vp2 $
+    - (ds.rec[7:502,7:502,7:874]*ds.ro_p[7:502,7:502,7:874] $
+    + ds.ion[7:502,7:502,7:874]*ds.ro_n[7:502,7:502,7:874])*vnvp $
+    + ds.ion[7:502,7:502,7:874]*ds.ro_n[7:502,7:502,7:874]*vn2
 
     ir = total(ir_element)*dxm*dym*dzm
     ir2=[ir2,ir]
