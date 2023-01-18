@@ -1,9 +1,9 @@
 ;God Damn it, Giulia!
 popul=1
 
-filename0 = '..//kink_MHD_1/' ;MHD
-filename1 = '../kink_PIP_1/' ; P1
-filename2 = '../kink_PIP_1/' ; P2
+filename0 = '../kink_instability_MHD_0/' ;MHD
+filename1 = '../kink_instability_PIP_0/' ; P1
+filename2 = '../kink_instability_PIP_1/' ; P2
 
 ohm0 = []
 ohm1 = []
@@ -14,6 +14,12 @@ fric2 = []
 
 ir1 = []
 ir2 = []
+
+meantp0=[]
+meantp1 = []
+meantn1 = []
+meantp2 = []
+meantn2 = []
 
 time0 = []
 time1 = []
@@ -35,7 +41,13 @@ for t =0,20 do begin
     ohm_element=total(ds['eta'][7:874,7:502,7:502]*jtot2[7:874,7:502,7:502])*dxm*dym*dzm
     ohm0=[ohm0,ohm_element]
     time0=[time0,ds.time[0]]
-
+    
+    rdmpi,ds,datapath=filename0,time_step=t,vararrin=['pr_p','ro_p']
+    
+    Tp = (5.0/6.0)*(ds.pr_p[7:874,7:502,7:502]/ds.ro_p[7:874,7:502,7:502])
+    
+    meanTp=mean(Tp)
+    meantp0=[meantp0,meanTp]
 endfor
     
 ;## PIP case - P1 ##
@@ -85,6 +97,11 @@ for t =0,18 do begin
     Tn = (5.0/3.0)*(ds.pr_n[7:874,7:502,7:502]/ds.ro_n[7:874,7:502,7:502])
     Tp = (5.0/6.0)*(ds.pr_p[7:874,7:502,7:502]/ds.ro_p[7:874,7:502,7:502])
     
+    meanTp=mean(Tp)
+    meanTn=mean(Tn)
+    meantp1=[meantp1,meanTp]
+    meantn1=[meantn1,meanTn]
+    
     vD = (ds.vx_n[7:874,7:502,7:502]-ds.vx_p[7:874,7:502,7:502])^2 $
     + (ds.vy_n[7:874,7:502,7:502]-ds.vy_p[7:874,7:502,7:502])^2 $
     + (ds,vz_n[7:874,7:502,7:502]-ds,vz_p[7:874,7:502,7:502])^2
@@ -124,6 +141,11 @@ for t =0,19 do begin
     Tn = (5.0/3.0)*(ds.pr_n[7:874,7:502,7:502]/ds.ro_n[7:874,7:502,7:502])
     Tp = (5.0/6.0)*(ds.pr_p[7:874,7:502,7:502]/ds.ro_p[7:874,7:502,7:502])
     
+    meanTp=mean(Tp)
+    meanTn=mean(Tn)
+    meantp2=[meantp2,meanTp]
+    meantn2=[meantn2,meanTn]
+        
     vD = (ds.vx_n[7:874,7:502,7:502]-ds.vx_p[7:874,7:502,7:502])^2 $
     + (ds.vy_n[7:874,7:502,7:502]-ds.vy_p[7:874,7:502,7:502])^2 $
     + (ds,vz_n[7:874,7:502,7:502]-ds,vz_p[7:874,7:502,7:502])^2
@@ -150,7 +172,7 @@ for t =0,19 do begin
     ir2=[ir2,ir]
 endfor
 
-save,fric1,fric2,ir1,ir2,filename='fig_8_fh.sav'
+save,fric1,fric2,ir1,ir2,meantp1,meantn1,meantp2,meantn2,filename='fig_8_fh.sav'
 
 endif
 if popul eq 0 then begin
@@ -159,7 +181,7 @@ if popul eq 0 then begin
 endif
 
 file = 'fig_8_data.h5'
-outvar=['ohm0','ohm1','ohm2','time0','time1','time2','fric1','fric2','ir1','ir2']
+outvar=['ohm0','ohm1','ohm2','time0','time1','time2','fric1','fric2','ir1','ir2','meanTp0','meanTp1','meanTn1','meanTp2','meanTn2']
 fid = H5F_CREATE(file)
 
 for i=0,n_elements(outvar)-1 do begin
@@ -173,6 +195,11 @@ for i=0,n_elements(outvar)-1 do begin
     if outvar(i) eq 'ir1' then data = ir1
     if outvar(i) eq 'fric2' then data = fric2
     if outvar(i) eq 'ir2' then data = ir2
+    if outvar(i) eq 'meanTp0' then data = meanTp0
+    if outvar(i) eq 'meanTp1' then data = meanTp1
+    if outvar(i) eq 'meanTn1' then data = meanTn1
+    if outvar(i) eq 'meanTp2' then data = meanTp2
+    if outvar(i) eq 'meanTn2' then data = meanTn2
     
     ;; get data type and space, needed to create the dataset
     datatype_id = H5T_IDL_CREATE(data)
