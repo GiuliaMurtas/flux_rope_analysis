@@ -8,14 +8,14 @@ popul=1
 
 if popul eq 1 then begin
 
-	rdmpi,ds,datapath='../kink_instability_PIP_1',time_step=[13],var=['jx','jy','jz']
+	rdmpi,ds,datapath='../kink_instability_PIP_1',time_step=[13],var=['bx','by','bz'],current=1
 	   
 	grid_x=size(ds.x,/dim)
 	grid_y=size(ds.y,/dim)
 
 	ohm_10_0=fltarr(grid_x,grid_y)
 	   
-	curr0 = sqrt((ds.jx[*,*,441])^2.0 + (ds.jy[*,*,441])^2.0 + (ds.jz[*,*,441])^2.0)
+	curr0 = sqrt((ds.j_x[*,*,441])^2.0 + (ds.j_y[*,*,441])^2.0 + (ds.j_z[*,*,441])^2.0)
 	   
 	for l = 0,495 do begin
 	   for m = 0,495 do begin
@@ -23,14 +23,14 @@ if popul eq 1 then begin
 	   endfor
 	endfor
 	
-	rdmpi,ds,datapath='../kink_instability_PIP_1',time_step=[16],var=['jx','jy','jz']
+	rdmpi,ds,datapath='../kink_instability_PIP_1',time_step=[16],var=['bx','by','bz'],current=1
 	   
 	grid_x=size(ds.x,/dim)
 	grid_y=size(ds.y,/dim)
 
 	ohm_10_1=fltarr(grid_x,grid_y)
 	   
-	curr1 = sqrt((ds.jx[*,*,441])^2.0 + (ds.jy[*,*,441])^2.0 + (ds.jz[*,*,441])^2.0)
+	curr1 = sqrt((ds.j_x[*,*,441])^2.0 + (ds.j_y[*,*,441])^2.0 + (ds.j_z[*,*,441])^2.0)
 	   
 	for l = 0,495 do begin
 	   for m = 0,495 do begin
@@ -38,14 +38,14 @@ if popul eq 1 then begin
 	   endfor
 	endfor
 	
-	rdmpi,ds,datapath='../kink_instability_PIP_1',time_step=[19],var=['jx','jy','jz']
+	rdmpi,ds,datapath='../kink_instability_PIP_1',time_step=[19],var=['bx','by','bz'],current=1
 	   
 	grid_x=size(ds.x,/dim)
 	grid_y=size(ds.y,/dim)
 
 	ohm_10_2=fltarr(grid_x,grid_y)
 	   
-	curr2 = sqrt((ds.jx[*,*,441])^2.0 + (ds.jy[*,*,441])^2.0 + (ds.jz[*,*,441])^2.0)
+	curr2 = sqrt((ds.j_x[*,*,441])^2.0 + (ds.j_y[*,*,441])^2.0 + (ds.j_z[*,*,441])^2.0)
 	   
 	for l = 0,495 do begin
 	   for m = 0,495 do begin
@@ -64,20 +64,20 @@ endif
 ; --------------------------------
 
 if popul eq 1 then begin
-	rdmpi,ds,datapath='../../kink_instability_PIP_1',time_step=[13],var=['ro_p','ro_n','vx_p','vy_p','vz_p','vx_n','vy_n','vz_n']
+	rdmpi,ds,datapath='../kink_instability_PIP_1',time_step=[13],var=['ro_p','ro_n','vx_p','vy_p','vz_p','vx_n','vy_n','vz_n']
 
 	vn2_0 = ds.vx_n[*,*,441]^2.0 + ds.vy_n[*,*,441]^2.0 + ds.vz_n[*,*,441]^2.0
 	vp2_0 = ds.vx_p[*,*,441]^2.0 + ds.vy_p[*,*,441]^2.0 + ds.vz_p[*,*,441]^2.0
 	vnvp_0 = (ds.vx_n[*,*,441]*ds.vx_p[*,*,441]) + (ds.vy_n[*,*,441]*ds.vy_p[*,*,441]) + (ds.vz_n[*,*,441]*ds.vz_p[*,*,441])
 	fh2_0 = ds.rec[*,*,441]*ds.ro_p[*,*,441]*vp2_0 - (ds.rec[*,*,441]*ds.ro_p[*,*,441] + ds.ion[*,*,441]*ds.ro_n[*,*,441])*vnvp_0 + ds.ion[*,*,441]*ds.ro_n[*,*,441]*vn2_0
 
-rdmpi,ds,datapath='../../kink_instability_PIP_1',time_step=[16],var=['ro_p','ro_n','vx_p','vy_p','vz_p','vx_n','vy_n','vz_n']
+rdmpi,ds,datapath='../kink_instability_PIP_1',time_step=[16],var=['ro_p','ro_n','vx_p','vy_p','vz_p','vx_n','vy_n','vz_n']
 	vn2_1 = ds.vx_n[*,*,441]^2.0 + ds.vy_n[*,*,441]^2.0 + ds.vz_n[*,*,441]^2.0
 	vp2_1 = ds.vx_p[*,*,441]^2.0 + ds.vy_p[*,*,441]^2.0 + ds.vz_p[*,*,441]^2.0
 	vnvp_1 = (ds.vx_n[*,*,441]*ds.vx_p[*,*,441]) + (ds.vy_n[*,*,441]*ds.vy_p[*,*,441]) + (ds.vz_n[*,*,441]*ds.vz_p[*,*,441])
 	fh2_1 = ds.rec[*,*,441]*ds.ro_p[*,*,441]*vp2_1 - (ds.rec[*,*,441]*ds.ro_p[*,*,441] + ds.ion[*,*,441]*ds.ro_n[*,*,441])*vnvp_1 + ds.ion[*,*,441]*ds.ro_n[*,*,441]*vn2_1
 
-rdmpi,ds,datapath='../../kink_instability_PIP_1',time_step=[19],var=['ro_p','ro_n','vx_p','vy_p','vz_p','vx_n','vy_n','vz_n']
+rdmpi,ds,datapath='../kink_instability_PIP_1',time_step=[19],var=['ro_p','ro_n','vx_p','vy_p','vz_p','vx_n','vy_n','vz_n']
 	vn2_2 = ds.vx_n[*,*,441]^2.0 + ds.vy_n[*,*,441]^2.0 + ds.vz_n[*,*,441]^2.0
 	vp2_2 = ds.vx_p[*,*,441]^2.0 + ds.vy_p[*,*,441]^2.0 + ds.vz_p[*,*,441]^2.0
 	vnvp_2 = (ds.vx_n[*,*,441]*ds.vx_p[*,*,441]) + (ds.vy_n[*,*,441]*ds.vy_p[*,*,441]) + (ds.vz_n[*,*,441]*ds.vz_p[*,*,441])
