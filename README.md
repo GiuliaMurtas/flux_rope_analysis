@@ -5,7 +5,7 @@ This repository collects a set of scripts employed for the analysis of kink unst
 ### Energy balance and heating processes
 
 1.  The script `energy_components.py` integrates the energy terms across the volume and allow to plot the global contribution of each component.
-2.  The script `growth_rate_plot.py` estimates the growth rate of the kink instability by fitting the logarithm of the total kinetic energy, and produces a plot of $\log_10(KE)$ with the fit.
+2.  The script `growth_rate_plot.py` estimates the growth rate of the kink instability by fitting the logarithm of the total kinetic energy, and produces a plot of $\log_{10}(KE)$ with the fit.
 3.  The script `heating.py` calculates the global contributions of each heating term (Ohmic heating $\eta J^2$ for all simulations, collisional frictional heating $\frac{1}{2} \alpha_c \rho_n \rho_p v_{D}^{2}$ and ionisation-recombination frictional heating for the PIP simulations) as a function of time.
 4.  The script `average_tempeature.py` calculates the average plasma and neutral temperatures of both MHD and PIP simulations, and produces a plot comparing the temperatures of different cases.
 
