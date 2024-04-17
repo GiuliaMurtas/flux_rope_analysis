@@ -21,3 +21,6 @@ This repository collects a set of scripts employed for the analysis of kink unst
 
 1.  The script `ionrec.py` produces a 1D plot of the global ionization/recombination rates in PIP (partially ionized plasmas) simulations as a function of time.
 
+### PIP properties
+
+1.  The script `PIP_0_mosaic.pro` produces a set of contour plots (temperature difference, drift velocity magnitude, current density magnitude, ionisation rate and recombination rate) at a single time frame for a PIP simulation. The mosaic is uploaded here with the name `PIP_0_mosaic.png`.
