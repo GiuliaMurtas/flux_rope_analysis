@@ -23,4 +23,4 @@ This repository collects a set of scripts employed for the analysis of kink unst
 
 ### PIP properties
 
-1.  The script `PIP_0_mosaic.pro` produces a set of contour plots (temperature difference, drift velocity magnitude, current density magnitude, ionisation rate and recombination rate) at a single time frame for a PIP simulation. The mosaic is uploaded here with the name `PIP_0_mosaic.jpg`.
+1.  `PIP_0_mosaic.pro` is an IDL script that produces a set of contour plots (temperature difference, drift velocity magnitude, current density magnitude, ionisation and recombination rates) displayed at a single time frame for a PIP simulation. The dataset relative to ionisation and recombination rates is contained in the file `PIP_0_ion_rec.sav` The mosaic is uploaded here with the name `PIP_0_mosaic.jpg`.
