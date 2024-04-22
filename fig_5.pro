@@ -37,6 +37,9 @@ if (popul eq 0) then begin
 	restore,'fig_5_ion_rec.sav'
 endif
 
+print,max(ion),min(ion),max(rec),min(rec)
+;stop
+
 ; -----------------------
 ; ## CONTOUR MAP PIP 1 ##
 ; -----------------------
@@ -47,7 +50,9 @@ restore,'PIP_1_mosaic.sav'
 levels=findgen(201)/200*0.3-0.15	; Temperature difference
 levels1=findgen(201)/200*0.19+0.0	; velocity drift
 levels2=findgen(201)/200*5.0+0.0	; current density magnitude
-levels3=findgen(201)/200*1+0.0		; ionisation-recombination rates
+;levels3=findgen(201)/200*1+0.0		; ionisation-recombination rates
+levels3ion=alog10(0.7*10.0^(findgen(101)/100*3-6.0))		; ionisation-recombination rates
+levels3rec=alog10(10.0^(findgen(101)/100*0.22-5.15))		; ionisation-recombination rates
 
 w=window(dimension=[1920,1080],/buffer)
 
@@ -69,13 +74,13 @@ p=plot([0.3,0.3],[0.2,0.9],thick=2,color='black',/overplot)
 p=plot([-0.6,0.3],[0.2,0.2],thick=2,color='black',/overplot)
 p=plot([-0.6,0.3],[0.9,0.9],thick=2,color='black',/overplot)
 
-c1=contour(reform(alog10(ion)),x,y,/fill,xstyle=1,ystyle=1,xr=[-1.5,1.5],yr=[-1.5,1.5],rgb_table=60,aspect_ratio=1, AXIS_STYLE=2,col=0,xtitle='x',xtickfont_size=20,ytickfont_size=20,font_size=20,title='$\Gamma_{ion}$',C_LABEL_SHOW=0,position=[0.59,0.55,0.77,0.9],/current)
+c1=contour(reform(alog10(ion)),x,y,c_value=levels3ion,/fill,xstyle=1,ystyle=1,xr=[-1.5,1.5],yr=[-1.5,1.5],rgb_table=60,aspect_ratio=1, AXIS_STYLE=2,col=0,xtitle='x',xtickfont_size=20,ytickfont_size=20,font_size=20,title='$\Gamma_{ion}$',C_LABEL_SHOW=0,position=[0.59,0.55,0.77,0.9],/current)
 p=plot([-0.6,-0.6],[0.2,0.9],thick=2,color='black',/overplot)
 p=plot([0.3,0.3],[0.2,0.9],thick=2,color='black',/overplot)
 p=plot([-0.6,0.3],[0.2,0.2],thick=2,color='black',/overplot)
 p=plot([-0.6,0.3],[0.9,0.9],thick=2,color='black',/overplot)
 
-c2=contour(reform(alog10(rec)),x,y,/fill,xstyle=1,ystyle=1,xr=[-1.5,1.5],yr=[-1.5,1.5],rgb_table=57,aspect_ratio=1, AXIS_STYLE=2,col=0,xtitle='x',xtickfont_size=20,ytickfont_size=20,font_size=20,title='$\Gamma_{rec}$',C_LABEL_SHOW=0,position=[0.77,0.55,0.95,0.9],/current)
+c2=contour(reform(alog10(rec)),x,y,c_value=levels3rec,/fill,xstyle=1,ystyle=1,xr=[-1.5,1.5],yr=[-1.5,1.5],rgb_table=57,aspect_ratio=1, AXIS_STYLE=2,col=0,xtitle='x',xtickfont_size=20,ytickfont_size=20,font_size=20,title='$\Gamma_{rec}$',C_LABEL_SHOW=0,position=[0.77,0.55,0.95,0.9],/current)
 p=plot([-0.6,-0.6],[0.2,0.9],thick=2,color='black',/overplot)
 p=plot([0.3,0.3],[0.2,0.9],thick=2,color='black',/overplot)
 p=plot([-0.6,0.3],[0.2,0.2],thick=2,color='black',/overplot)
@@ -111,9 +116,9 @@ ce=contour(reform(sqrt(vd))>levels1[0]+0.0001,x,y,c_value=levels1,/fill,xstyle=1
 
 cf=contour(reform(J)>levels2[0]+0.0001,x,y,c_value=levels2,/fill,xstyle=1,ystyle=1,xr=[-0.6,0.3],yr=[0.2,0.9],rgb_table=56,aspect_ratio=1, AXIS_STYLE=2,col=0,xtitle='x',xtickfont_size=20,ytickfont_size=20,font_size=20,C_LABEL_SHOW=0,position=[0.41,0.2,0.59,0.55],/current)
 
-c3=contour(reform(alog10(ion)),x,y,/fill,xstyle=1,ystyle=1,xr=[-0.6,0.3],yr=[0.2,0.9],rgb_table=60,aspect_ratio=1, AXIS_STYLE=2,col=0,xtitle='x',xtickfont_size=20,ytickfont_size=20,font_size=20,C_LABEL_SHOW=0,position=[0.59,0.2,0.77,0.55],/current)
+c3=contour(reform(alog10(ion)),x,y,/fill,c_value=levels3ion,xstyle=1,ystyle=1,xr=[-0.6,0.3],yr=[0.2,0.9],rgb_table=60,aspect_ratio=1, AXIS_STYLE=2,col=0,xtitle='x',xtickfont_size=20,ytickfont_size=20,font_size=20,C_LABEL_SHOW=0,position=[0.59,0.2,0.77,0.55],/current)
 
-c4=contour(reform(alog10(rec)),x,y,/fill,xstyle=1,ystyle=1,xr=[-0.6,0.3],yr=[0.2,0.9],rgb_table=57,aspect_ratio=1, AXIS_STYLE=2,col=0,xtitle='x',xtickfont_size=20,ytickfont_size=20,font_size=20,C_LABEL_SHOW=0,position=[0.77,0.2,0.95,0.55],/current)
+c4=contour(reform(alog10(rec)),x,y,/fill,c_value=levels3rec,xstyle=1,ystyle=1,xr=[-0.6,0.3],yr=[0.2,0.9],rgb_table=57,aspect_ratio=1, AXIS_STYLE=2,col=0,xtitle='x',xtickfont_size=20,ytickfont_size=20,font_size=20,C_LABEL_SHOW=0,position=[0.77,0.2,0.95,0.55],/current)
 
 ad=cd.axes
 ad[0].tickvalue=[-0.4,-0.2,0.0,0.2]
@@ -142,8 +147,14 @@ a4[1].tickname=['','','','']
 bar1=COLORBAR(TARGET=cd,rgb_table=69,ORIENTATION=0,position=[0.07,0.1,0.21,0.15],TEXTPOS = 0,major=3,taper=0,FONT_SIZE=18, range=[-0.15,0.15],TICKVALUES=[-0.1,0.0,0.1],TICKNAME=['-0.1','0.0','0.1'])
 bar2=COLORBAR(TARGET=ce,rgb_table=59,ORIENTATION=0,position=[0.25,0.1,0.39,0.15],TEXTPOS = 0,major=3,taper=0,FONT_SIZE=18, range=[0,0.19],TICKVALUES=[0,0.09,0.18],TICKNAME=['0.0','0.09','0.18'])
 bar3=COLORBAR(TARGET=cf,rgb_table=56,ORIENTATION=0,position=[0.43,0.1,0.57,0.15],TEXTPOS = 0,major=3,taper=0,FONT_SIZE=18, range=[0,5],TICKVALUES=[0,2.5,5],TICKNAME=['0.0','2.5','5'])
-bar4=COLORBAR(TARGET=c3,rgb_table=60,ORIENTATION=0,position=[0.61,0.1,0.75,0.15],TEXTPOS = 0,major=3,taper=0,FONT_SIZE=18, range=[0,1],TICKVALUES=[0,0.5,1],TICKNAME=['0.0','0.5','1.0'])
-bar5=COLORBAR(TARGET=c4,rgb_table=57,ORIENTATION=0,position=[0.79,0.1,0.93,0.15],TEXTPOS = 0,major=3,taper=0,FONT_SIZE=18, range=[0,1],TICKVALUES=[0,0.5,1],TICKNAME=['0.0','0.5','1.0'])
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+tick_index=[-6.0,-5.0,-4.0]
+tick_index=(tick_index-min(levels3ion))/abs(min(levels3ion)-max(levels3ion))
+bar4=COLORBAR(TARGET=c3,rgb_table=60,ORIENTATION=0,position=[0.61,0.1,0.75,0.15],TEXTPOS = 0,major=3,taper=0,FONT_SIZE=18, range=[0,1],TICKVALUES=tick_index,TICKNAME=['$10^{-6}$','$10^{-5}$','$10^{-4}$'])
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+tick_index=[-5.1,-5.0]
+tick_index=(tick_index-min(levels3rec))/abs(min(levels3rec)-max(levels3rec))
+bar5=COLORBAR(TARGET=c4,rgb_table=57,ORIENTATION=0,position=[0.79,0.1,0.93,0.15],TEXTPOS = 0,major=3,taper=0,FONT_SIZE=18, range=[0,1],TICKVALUES=tick_index,TICKNAME=['$10^{-5.1}$','$10^{-5}$'])
 
 ca.save,'fig_5.jpg'
 
