@@ -99,7 +99,7 @@ restore,'vd_PIP_10.sav'
 
 levels2=findgen(201)/200*0.01+0.0	; color scale for frictional heating components
 levels3=findgen(201)/200*0.2+0.0	; color scale for Ohmic heating
-levels4=findgen(201)/200*0.07+0.15	; color scale for temperatures
+levels4=findgen(201)/200*0.15+0.07	; color scale for temperatures
 
 ; ## Neutral temperature panels ##
 w=window(dimension=[1920,1080],/buffer)
