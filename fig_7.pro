@@ -104,13 +104,13 @@ levels4=findgen(201)/200*0.07+0.15	; color scale for temperatures
 ; ## Neutral temperature panels ##
 w=window(dimension=[1920,1080],/buffer)
 
-ca=contour(reform(Tn_10_0)>levels4[0]+0.0001,x,y,c_value=levels4,/fill,xstyle=1,ystyle=1,xr=[-1.,1.],yr=[-1.,1.],rgb_table=52,aspect_ratio=1, AXIS_STYLE=2,col=0,xtitle='x',ytitle='y',xtickfont_size=18,ytickfont_size=18,C_LABEL_SHOW=0,position=[0.05,0.65,0.23,0.95],/current)
+ca=contour(reform(Tn_10_0)>levels4[0]+0.0001,x,y,c_value=levels4,/fill,xstyle=1,ystyle=1,xr=[-1.,1.],yr=[-1.,1.],rgb_table=52,aspect_ratio=1, AXIS_STYLE=2,col=0,xtitle='x',ytitle='y',xtickfont_size=18,ytickfont_size=18,C_LABEL_SHOW=0,position=[0.05,0.65,0.275,0.95],/current)
 
-cb=contour(reform(Tn_10_1)>levels4[0]+0.0001,x,y,c_value=levels4,/fill,xstyle=1,ystyle=1,xr=[-1.,1.],yr=[-1.,1.],rgb_table=52,aspect_ratio=1, AXIS_STYLE=2,col=0,xtitle='x',ytitle='y',xtickfont_size=18,ytickfont_size=18,C_LABEL_SHOW=0,position=[0.05,0.35,0.23,0.65],/current)
+cb=contour(reform(Tn_10_1)>levels4[0]+0.0001,x,y,c_value=levels4,/fill,xstyle=1,ystyle=1,xr=[-1.,1.],yr=[-1.,1.],rgb_table=52,aspect_ratio=1, AXIS_STYLE=2,col=0,xtitle='x',ytitle='y',xtickfont_size=18,ytickfont_size=18,C_LABEL_SHOW=0,position=[0.05,0.35,0.275,0.65],/current)
 
-cc=contour(reform(Tn_10_2)>levels4[0]+0.0001,x,y,c_value=levels4,/fill,xstyle=1,ystyle=1,xr=[-1.,1.],yr=[-1.,1.],rgb_table=52,aspect_ratio=1, AXIS_STYLE=2,col=0,xtitle='x',ytitle='y',xtickfont_size=18,ytickfont_size=18,C_LABEL_SHOW=0,position=[0.05,0.05,0.23,0.35],/current)
+cc=contour(reform(Tn_10_2)>levels4[0]+0.0001,x,y,c_value=levels4,/fill,xstyle=1,ystyle=1,xr=[-1.,1.],yr=[-1.,1.],rgb_table=52,aspect_ratio=1, AXIS_STYLE=2,col=0,xtitle='x',ytitle='y',xtickfont_size=18,ytickfont_size=18,C_LABEL_SHOW=0,position=[0.05,0.05,0.275,0.35],/current)
 
-bar=COLORBAR(TARGET=ca,rgb_table=52,ORIENTATION=0,position=[0.07,0.96,0.21,0.98],TEXTPOS = 1,major=2,taper=0,FONT_SIZE=18,TITLE='$T_n$',range=[0.07,0.15],TICKVALUES=[0.07,0.1],TICKNAME=['0.07','0.1'])
+bar=COLORBAR(TARGET=ca,rgb_table=52,ORIENTATION=0,position=[0.07,0.96,0.255,0.98],TEXTPOS = 1,major=2,taper=0,FONT_SIZE=18,TITLE='$T_n$',range=[0.07,0.15],TICKVALUES=[0.07,0.1],TICKNAME=['0.07','0.1'])
 
 aa=ca.axes
 aa[0].tickvalue=[-0.5,-0,0.5]
@@ -126,13 +126,13 @@ ac[1].tickvalue=[-0.5,-0,0.5]
 
 ; ## Plasma temperature panels ##
 
-cd=contour(reform(Tp_10_0)>levels4[0]+0.0001,x,y,c_value=levels4,/fill,xstyle=1,ystyle=1,xr=[-1.,1.],yr=[-1.,1.],rgb_table=55,aspect_ratio=1, AXIS_STYLE=2,col=0,xtitle='x',xtickfont_size=18,ytickfont_size=18,C_LABEL_SHOW=0,position=[0.23,0.65,0.41,0.95],/current)
+cd=contour(reform(Tp_10_0)>levels4[0]+0.0001,x,y,c_value=levels4,/fill,xstyle=1,ystyle=1,xr=[-1.,1.],yr=[-1.,1.],rgb_table=55,aspect_ratio=1, AXIS_STYLE=2,col=0,xtitle='x',xtickfont_size=18,ytickfont_size=18,C_LABEL_SHOW=0,position=[0.275,0.65,0.5,0.95],/current)
 
-ce=contour(reform(Tp_10_1)>levels4[0]+0.0001,x,y,c_value=levels4,/fill,xstyle=1,ystyle=1,xr=[-1.,1.],yr=[-1.,1.],rgb_table=55,aspect_ratio=1, AXIS_STYLE=2,col=0,xtitle='x',xtickfont_size=18,ytickfont_size=18,C_LABEL_SHOW=0,position=[0.23,0.35,0.41,0.65],/current)
+ce=contour(reform(Tp_10_1)>levels4[0]+0.0001,x,y,c_value=levels4,/fill,xstyle=1,ystyle=1,xr=[-1.,1.],yr=[-1.,1.],rgb_table=55,aspect_ratio=1, AXIS_STYLE=2,col=0,xtitle='x',xtickfont_size=18,ytickfont_size=18,C_LABEL_SHOW=0,position=[0.275,0.35,0.5,0.65],/current)
 
-cf=contour(reform(Tp_10_2)>levels4[0]+0.0001,x,y,c_value=levels4,/fill,xstyle=1,ystyle=1,xr=[-1.,1.],yr=[-1.,1.],rgb_table=55,aspect_ratio=1, AXIS_STYLE=2,col=0,xtitle='x',xtickfont_size=18,ytickfont_size=18,C_LABEL_SHOW=0,position=[0.23,0.05,0.41,0.35],/current)
+cf=contour(reform(Tp_10_2)>levels4[0]+0.0001,x,y,c_value=levels4,/fill,xstyle=1,ystyle=1,xr=[-1.,1.],yr=[-1.,1.],rgb_table=55,aspect_ratio=1, AXIS_STYLE=2,col=0,xtitle='x',xtickfont_size=18,ytickfont_size=18,C_LABEL_SHOW=0,position=[0.275,0.05,0.5,0.35],/current)
 
-bar2=COLORBAR(TARGET=cd,rgb_table=55,ORIENTATION=0,position=[0.25,0.96,0.39,0.98],TEXTPOS = 1,major=2,taper=0,FONT_SIZE=18,TITLE='$T_p$',range=[0.0,0.5],TICKVALUES=[0.2,0.4],TICKNAME=['0.2','0.4'])
+bar2=COLORBAR(TARGET=cd,rgb_table=55,ORIENTATION=0,position=[0.295,0.96,0.0.47,0.98],TEXTPOS = 1,major=2,taper=0,FONT_SIZE=18,TITLE='$T_p$',range=[0.0,0.5],TICKVALUES=[0.2,0.4],TICKNAME=['0.2','0.4'])
 
 ad=cd.axes
 ad[0].tickvalue=[-0.5,-0,0.5]
@@ -153,13 +153,13 @@ af[1].tickname=['','','']
 
 ; ## Collisional frictional heating panels (FH1) ##
 
-cg=contour(reform(fh_10_0)>levels2[0]+0.0001,x,y,c_value=levels2,/fill,xstyle=1,ystyle=1,xr=[-1.,1.],yr=[-1.,1.],rgb_table=57,aspect_ratio=1, AXIS_STYLE=2,col=0,xtitle='x',xtickfont_size=18,ytickfont_size=18,C_LABEL_SHOW=0,position=[0.41,0.65,0.59,0.95],/current)
+cg=contour(reform(fh_10_0)>levels2[0]+0.0001,x,y,c_value=levels2,/fill,xstyle=1,ystyle=1,xr=[-1.,1.],yr=[-1.,1.],rgb_table=57,aspect_ratio=1, AXIS_STYLE=2,col=0,xtitle='x',xtickfont_size=18,ytickfont_size=18,C_LABEL_SHOW=0,position=[0.5,0.65,0.725,0.95],/current)
 
-ch=contour(reform(fh_10_1)>levels2[0]+0.0001,x,y,c_value=levels2,/fill,xstyle=1,ystyle=1,xr=[-1.,1.],yr=[-1.,1.],rgb_table=57,aspect_ratio=1, AXIS_STYLE=2,col=0,xtitle='x',xtickfont_size=18,ytickfont_size=18,C_LABEL_SHOW=0,position=[0.41,0.35,0.59,0.65],/current)
+ch=contour(reform(fh_10_1)>levels2[0]+0.0001,x,y,c_value=levels2,/fill,xstyle=1,ystyle=1,xr=[-1.,1.],yr=[-1.,1.],rgb_table=57,aspect_ratio=1, AXIS_STYLE=2,col=0,xtitle='x',xtickfont_size=18,ytickfont_size=18,C_LABEL_SHOW=0,position=[0.5,0.35,0.725,0.65],/current)
 
-ci=contour(reform(fh_10_2)>levels2[0]+0.0001,x,y,c_value=levels2,/fill,xstyle=1,ystyle=1,xr=[-1.,1.],yr=[-1.,1.],rgb_table=57,aspect_ratio=1, AXIS_STYLE=2,col=0,xtitle='x',xtickfont_size=18,ytickfont_size=18,C_LABEL_SHOW=0,position=[0.41,0.05,0.59,0.35],/current)
+ci=contour(reform(fh_10_2)>levels2[0]+0.0001,x,y,c_value=levels2,/fill,xstyle=1,ystyle=1,xr=[-1.,1.],yr=[-1.,1.],rgb_table=57,aspect_ratio=1, AXIS_STYLE=2,col=0,xtitle='x',xtickfont_size=18,ytickfont_size=18,C_LABEL_SHOW=0,position=[0.5,0.05,0.725,0.35],/current)
 
-bar3=COLORBAR(TARGET=cg,rgb_table=57,ORIENTATION=0,position=[0.43,0.96,0.57,0.98],TEXTPOS = 1,major=3,taper=0,FONT_SIZE=18,TITLE='$FH_1$',range=[0,0.01],TICKVALUES=[0.0,0.005,0.01],TICKNAME=['0.0','0.005','0.01'])
+bar3=COLORBAR(TARGET=cg,rgb_table=57,ORIENTATION=0,position=[0.53,0.96,0.705,0.98],TEXTPOS = 1,major=3,taper=0,FONT_SIZE=18,TITLE='$FH_1$',range=[0,0.01],TICKVALUES=[0.0,0.005,0.01],TICKNAME=['0.0','0.005','0.01'])
 
 ag=cg.axes
 ag[0].tickvalue=[-0.5,-0,0.5]
@@ -207,13 +207,13 @@ ai[1].tickname=['','','']
 
 ; ## Ohmic heating panels ##
 
-cl=contour(reform(ohm_10_0)>levels3[0]+0.0001,x,y,c_value=levels3,/fill,xstyle=1,ystyle=1,xr=[-1.,1.],yr=[-1.,1.],rgb_table=62,aspect_ratio=1, AXIS_STYLE=2,col=0,xtitle='x',xtickfont_size=18,ytickfont_size=18,C_LABEL_SHOW=0,position=[0.77,0.65,0.95,0.95],/current)
+cl=contour(reform(ohm_10_0)>levels3[0]+0.0001,x,y,c_value=levels3,/fill,xstyle=1,ystyle=1,xr=[-1.,1.],yr=[-1.,1.],rgb_table=62,aspect_ratio=1, AXIS_STYLE=2,col=0,xtitle='x',xtickfont_size=18,ytickfont_size=18,C_LABEL_SHOW=0,position=[0.725,0.65,0.95,0.95],/current)
 
-cm=contour(reform(ohm_10_1)>levels3[0]+0.0001,x,y,c_value=levels3,/fill,xstyle=1,ystyle=1,xr=[-1.,1.],yr=[-1.,1.],rgb_table=62,aspect_ratio=1, AXIS_STYLE=2,col=0,xtitle='x',xtickfont_size=18,ytickfont_size=18,C_LABEL_SHOW=0,position=[0.77,0.35,0.95,0.65],/current)
+cm=contour(reform(ohm_10_1)>levels3[0]+0.0001,x,y,c_value=levels3,/fill,xstyle=1,ystyle=1,xr=[-1.,1.],yr=[-1.,1.],rgb_table=62,aspect_ratio=1, AXIS_STYLE=2,col=0,xtitle='x',xtickfont_size=18,ytickfont_size=18,C_LABEL_SHOW=0,position=[0.725,0.35,0.95,0.65],/current)
 
-cn=contour(reform(ohm_10_2)>levels3[0]+0.0001,x,y,c_value=levels3,/fill,xstyle=1,ystyle=1,xr=[-1.,1.],yr=[-1.,1.],rgb_table=62,aspect_ratio=1, AXIS_STYLE=2,col=0,xtitle='x',xtickfont_size=18,ytickfont_size=18,C_LABEL_SHOW=0,position=[0.77,0.05,0.95,0.35],/current)
+cn=contour(reform(ohm_10_2)>levels3[0]+0.0001,x,y,c_value=levels3,/fill,xstyle=1,ystyle=1,xr=[-1.,1.],yr=[-1.,1.],rgb_table=62,aspect_ratio=1, AXIS_STYLE=2,col=0,xtitle='x',xtickfont_size=18,ytickfont_size=18,C_LABEL_SHOW=0,position=[0.725,0.05,0.95,0.35],/current)
 
-bar4=COLORBAR(TARGET=cl,rgb_table=62,ORIENTATION=0,position=[0.79,0.96,0.93,0.98],TEXTPOS = 1,major=3,taper=0,FONT_SIZE=18,TITLE='$Ohmic heating$',range=[0,0.2],TICKVALUES=[0.0,0.1,0.2],TICKNAME=['0.0','0.1','0.2'])
+bar4=COLORBAR(TARGET=cl,rgb_table=62,ORIENTATION=0,position=[0.755,0.96,0.93,0.98],TEXTPOS = 1,major=3,taper=0,FONT_SIZE=18,TITLE='$Ohmic heating$',range=[0,0.2],TICKVALUES=[0.0,0.1,0.2],TICKNAME=['0.0','0.1','0.2'])
 
 al=cl.axes
 al[0].tickvalue=[-0.5,-0,0.5]
