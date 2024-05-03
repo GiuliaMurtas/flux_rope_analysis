@@ -110,7 +110,7 @@ cb=contour(reform(Tn_10_1)>levels4[0]+0.0001,x,y,c_value=levels4,/fill,xstyle=1,
 
 cc=contour(reform(Tn_10_2)>levels4[0]+0.0001,x,y,c_value=levels4,/fill,xstyle=1,ystyle=1,xr=[-1.,1.],yr=[-1.,1.],rgb_table=52,aspect_ratio=1, AXIS_STYLE=2,col=0,xtitle='x',ytitle='y',xtickfont_size=18,ytickfont_size=18,C_LABEL_SHOW=0,position=[0.05,0.05,0.23,0.35],/current)
 
-bar=COLORBAR(TARGET=ca,rgb_table=52,ORIENTATION=0,position=[0.07,0.96,0.21,0.98],TEXTPOS = 1,major=2,taper=0,FONT_SIZE=18,TITLE='$T_n$',range=[0.0,0.5],TICKVALUES=[0.2,0.4],TICKNAME=['0.2','0.4'])
+bar=COLORBAR(TARGET=ca,rgb_table=52,ORIENTATION=0,position=[0.07,0.96,0.21,0.98],TEXTPOS = 1,major=2,taper=0,FONT_SIZE=18,TITLE='$T_n$',range=[0.07,0.15],TICKVALUES=[0.07,0.1],TICKNAME=['0.07','0.1'])
 
 aa=ca.axes
 aa[0].tickvalue=[-0.5,-0,0.5]
