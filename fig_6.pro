@@ -78,7 +78,7 @@ restore,'vd_PIP_1.sav'
 levels1=findgen(201)/200*0.001+0.0	; color scale for ion/rec frictional heating
 levels2=findgen(201)/200*0.01+0.0	; color scale for collisional frictional heating
 levels3=findgen(201)/200*0.2+0.0	; color scale for Ohmic heating
-levels4=findgen(201)/200*0.1+0.0	; color scale for temperatures
+levels4=findgen(201)/200*0.08+0.07	; color scale for temperatures
 
 print,'Max Tn = ',max(Tn_1_2)
 print,'Max Tp = ',max(Tp_1_2)
@@ -164,30 +164,30 @@ ai[1].tickname=['','','']
 
 ; ## Ion/rec frictional heating panels (FH2) ##
 
-c1=contour(reform(fh2_0)>levels2[0]+0.0001,x,y,c_value=levels2,/fill,xstyle=1,ystyle=1,xr=[-1.,1.],yr=[-1.,1.],rgb_table=51,aspect_ratio=1, AXIS_STYLE=2,col=0,xtitle='x',xtickfont_size=18,ytickfont_size=18,C_LABEL_SHOW=0,position=[0.59,0.65,0.77,0.95],/current)
+;c1=contour(reform(fh2_0)>levels2[0]+0.0001,x,y,c_value=levels2,/fill,xstyle=1,ystyle=1,xr=[-1.,1.],yr=[-1.,1.],rgb_table=51,aspect_ratio=1, AXIS_STYLE=2,col=0,xtitle='x',xtickfont_size=18,ytickfont_size=18,C_LABEL_SHOW=0,position=[0.59,0.65,0.77,0.95],/current)
 
-c2=contour(reform(fh2_1)>levels2[0]+0.0001,x,y,c_value=levels2,/fill,xstyle=1,ystyle=1,xr=[-1.,1.],yr=[-1.,1.],rgb_table=51,aspect_ratio=1, AXIS_STYLE=2,col=0,xtitle='x',xtickfont_size=18,ytickfont_size=18,C_LABEL_SHOW=0,position=[0.59,0.35,0.77,0.65],/current)
+;c2=contour(reform(fh2_1)>levels2[0]+0.0001,x,y,c_value=levels2,/fill,xstyle=1,ystyle=1,xr=[-1.,1.],yr=[-1.,1.],rgb_table=51,aspect_ratio=1, AXIS_STYLE=2,col=0,xtitle='x',xtickfont_size=18,ytickfont_size=18,C_LABEL_SHOW=0,position=[0.59,0.35,0.77,0.65],/current)
 
-c3=contour(reform(fh2_2)>levels2[0]+0.0001,x,y,c_value=levels2,/fill,xstyle=1,ystyle=1,xr=[-1.,1.],yr=[-1.,1.],rgb_table=51,aspect_ratio=1, AXIS_STYLE=2,col=0,xtitle='x',xtickfont_size=18,ytickfont_size=18,C_LABEL_SHOW=0,position=[0.59,0.05,0.77,0.35],/current)
+;c3=contour(reform(fh2_2)>levels2[0]+0.0001,x,y,c_value=levels2,/fill,xstyle=1,ystyle=1,xr=[-1.,1.],yr=[-1.,1.],rgb_table=51,aspect_ratio=1, AXIS_STYLE=2,col=0,xtitle='x',xtickfont_size=18,ytickfont_size=18,C_LABEL_SHOW=0,position=[0.59,0.05,0.77,0.35],/current)
 
-bara=COLORBAR(TARGET=c3,rgb_table=51,ORIENTATION=0,position=[0.61,0.96,0.75,0.98],TEXTPOS = 1,major=3,taper=0,FONT_SIZE=18,TITLE='$FH_2$',range=[0,0.001],TICKVALUES=[0.0,0.0005,0.001],TICKNAME=['0.0','0.0005','0.001'])
+;bara=COLORBAR(TARGET=c3,rgb_table=51,ORIENTATION=0,position=[0.61,0.96,0.75,0.98],TEXTPOS = 1,major=3,taper=0,FONT_SIZE=18,TITLE='$FH_2$',range=[0,0.001],TICKVALUES=[0.0,0.0005,0.001],TICKNAME=['0.0','0.0005','0.001'])
 
-a1=c1.axes
-a1[0].tickvalue=[-0.5,-0,0.5]
-a1[1].tickvalue=[-0.5,-0,0.5]
-a1[0].tickname=['','','']
-a1[1].tickname=['','','']
+;a1=c1.axes
+;a1[0].tickvalue=[-0.5,-0,0.5]
+;a1[1].tickvalue=[-0.5,-0,0.5]
+;a1[0].tickname=['','','']
+;a1[1].tickname=['','','']
 
-a2=c2.axes
-a2[0].tickvalue=[-0.5,-0,0.5]
-a2[1].tickvalue=[-0.5,-0,0.5]
-a2[0].tickname=['','','']
-a2[1].tickname=['','','']
+;a2=c2.axes
+;a2[0].tickvalue=[-0.5,-0,0.5]
+;a2[1].tickvalue=[-0.5,-0,0.5]
+;a2[0].tickname=['','','']
+;a2[1].tickname=['','','']
 
-a3=c3.axes
-a3[0].tickvalue=[-0.5,-0,0.5]
-a3[1].tickvalue=[-0.5,-0,0.5]
-a3[1].tickname=['','','']
+;a3=c3.axes
+;a3[0].tickvalue=[-0.5,-0,0.5]
+;a3[1].tickvalue=[-0.5,-0,0.5]
+;a3[1].tickname=['','','']
 
 ; ## Ohmic heating panels ##
 
