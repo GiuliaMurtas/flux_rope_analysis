@@ -63,31 +63,31 @@ endif
 ; ## ION/REC FRICTIONAL HEATING ##
 ; --------------------------------
 
-if popul eq 1 then begin
-	rdmpi,ds,datapath='../kink_instability_PIP_1',time_step=[13],var=['ro_p','ro_n','vx_p','vy_p','vz_p','vx_n','vy_n','vz_n']
+;if popul eq 1 then begin
+;	rdmpi,ds,datapath='../kink_instability_PIP_1',time_step=[13],var=['ro_p','ro_n','vx_p','vy_p','vz_p','vx_n','vy_n','vz_n']
 
-	vn2_0 = ds.vx_n[*,*,441]^2.0 + ds.vy_n[*,*,441]^2.0 + ds.vz_n[*,*,441]^2.0
-	vp2_0 = ds.vx_p[*,*,441]^2.0 + ds.vy_p[*,*,441]^2.0 + ds.vz_p[*,*,441]^2.0
-	vnvp_0 = (ds.vx_n[*,*,441]*ds.vx_p[*,*,441]) + (ds.vy_n[*,*,441]*ds.vy_p[*,*,441]) + (ds.vz_n[*,*,441]*ds.vz_p[*,*,441])
-	fh2_0 = ds.rec[*,*,441]*ds.ro_p[*,*,441]*vp2_0 - (ds.rec[*,*,441]*ds.ro_p[*,*,441] + ds.ion[*,*,441]*ds.ro_n[*,*,441])*vnvp_0 + ds.ion[*,*,441]*ds.ro_n[*,*,441]*vn2_0
+;	vn2_0 = ds.vx_n[*,*,441]^2.0 + ds.vy_n[*,*,441]^2.0 + ds.vz_n[*,*,441]^2.0
+;	vp2_0 = ds.vx_p[*,*,441]^2.0 + ds.vy_p[*,*,441]^2.0 + ds.vz_p[*,*,441]^2.0
+;	vnvp_0 = (ds.vx_n[*,*,441]*ds.vx_p[*,*,441]) + (ds.vy_n[*,*,441]*ds.vy_p[*,*,441]) + (ds.vz_n[*,*,441]*ds.vz_p[*,*,441])
+;	fh2_0 = ds.rec[*,*,441]*ds.ro_p[*,*,441]*vp2_0 - (ds.rec[*,*,441]*ds.ro_p[*,*,441] + ds.ion[*,*,441]*ds.ro_n[*,*,441])*vnvp_0 + ds.ion[*,*,441]*ds.ro_n[*,*,441]*vn2_0
 
-rdmpi,ds,datapath='../kink_instability_PIP_1',time_step=[16],var=['ro_p','ro_n','vx_p','vy_p','vz_p','vx_n','vy_n','vz_n']
-	vn2_1 = ds.vx_n[*,*,441]^2.0 + ds.vy_n[*,*,441]^2.0 + ds.vz_n[*,*,441]^2.0
-	vp2_1 = ds.vx_p[*,*,441]^2.0 + ds.vy_p[*,*,441]^2.0 + ds.vz_p[*,*,441]^2.0
-	vnvp_1 = (ds.vx_n[*,*,441]*ds.vx_p[*,*,441]) + (ds.vy_n[*,*,441]*ds.vy_p[*,*,441]) + (ds.vz_n[*,*,441]*ds.vz_p[*,*,441])
-	fh2_1 = ds.rec[*,*,441]*ds.ro_p[*,*,441]*vp2_1 - (ds.rec[*,*,441]*ds.ro_p[*,*,441] + ds.ion[*,*,441]*ds.ro_n[*,*,441])*vnvp_1 + ds.ion[*,*,441]*ds.ro_n[*,*,441]*vn2_1
+;rdmpi,ds,datapath='../kink_instability_PIP_1',time_step=[16],var=['ro_p','ro_n','vx_p','vy_p','vz_p','vx_n','vy_n','vz_n']
+;	vn2_1 = ds.vx_n[*,*,441]^2.0 + ds.vy_n[*,*,441]^2.0 + ds.vz_n[*,*,441]^2.0
+;	vp2_1 = ds.vx_p[*,*,441]^2.0 + ds.vy_p[*,*,441]^2.0 + ds.vz_p[*,*,441]^2.0
+;	vnvp_1 = (ds.vx_n[*,*,441]*ds.vx_p[*,*,441]) + (ds.vy_n[*,*,441]*ds.vy_p[*,*,441]) + (ds.vz_n[*,*,441]*ds.vz_p[*,*,441])
+;	fh2_1 = ds.rec[*,*,441]*ds.ro_p[*,*,441]*vp2_1 - (ds.rec[*,*,441]*ds.ro_p[*,*,441] + ds.ion[*,*,441]*ds.ro_n[*,*,441])*vnvp_1 + ds.ion[*,*,441]*ds.ro_n[*,*,441]*vn2_1
 
-rdmpi,ds,datapath='../kink_instability_PIP_1',time_step=[19],var=['ro_p','ro_n','vx_p','vy_p','vz_p','vx_n','vy_n','vz_n']
-	vn2_2 = ds.vx_n[*,*,441]^2.0 + ds.vy_n[*,*,441]^2.0 + ds.vz_n[*,*,441]^2.0
-	vp2_2 = ds.vx_p[*,*,441]^2.0 + ds.vy_p[*,*,441]^2.0 + ds.vz_p[*,*,441]^2.0
-	vnvp_2 = (ds.vx_n[*,*,441]*ds.vx_p[*,*,441]) + (ds.vy_n[*,*,441]*ds.vy_p[*,*,441]) + (ds.vz_n[*,*,441]*ds.vz_p[*,*,441])
-	fh2_2 = ds.rec[*,*,441]*ds.ro_p[*,*,441]*vp2_2 - (ds.rec[*,*,441]*ds.ro_p[*,*,441] + ds.ion[*,*,441]*ds.ro_n[*,*,441])*vnvp_2 + ds.ion[*,*,441]*ds.ro_n[*,*,441]*vn2_2
+;rdmpi,ds,datapath='../kink_instability_PIP_1',time_step=[19],var=['ro_p','ro_n','vx_p','vy_p','vz_p','vx_n','vy_n','vz_n']
+;	vn2_2 = ds.vx_n[*,*,441]^2.0 + ds.vy_n[*,*,441]^2.0 + ds.vz_n[*,*,441]^2.0
+;	vp2_2 = ds.vx_p[*,*,441]^2.0 + ds.vy_p[*,*,441]^2.0 + ds.vz_p[*,*,441]^2.0
+;	vnvp_2 = (ds.vx_n[*,*,441]*ds.vx_p[*,*,441]) + (ds.vy_n[*,*,441]*ds.vy_p[*,*,441]) + (ds.vz_n[*,*,441]*ds.vz_p[*,*,441])
+;	fh2_2 = ds.rec[*,*,441]*ds.ro_p[*,*,441]*vp2_2 - (ds.rec[*,*,441]*ds.ro_p[*,*,441] + ds.ion[*,*,441]*ds.ro_n[*,*,441])*vnvp_2 + ds.ion[*,*,441]*ds.ro_n[*,*,441]*vn2_2
 
-	save,vn2_0,vp2_0,vnvp_0,fh2_0,vn2_1,vp2_1,vnvp_1,fh2_1,vn2_2,vp2_2,vnvp_2,fh2_2,filename='fig7_fh.sav'
-endif
-if popul eq 0 then begin
-	restore,'fig7_fh.sav'
-endif
+;	save,vn2_0,vp2_0,vnvp_0,fh2_0,vn2_1,vp2_1,vnvp_1,fh2_1,vn2_2,vp2_2,vnvp_2,fh2_2,filename='fig7_fh.sav'
+;endif
+;if popul eq 0 then begin
+;	restore,'fig7_fh.sav'
+;endif
 
 ; ----------------------------------------
 ; ## HEATING TERMS AND TEMPERATURE MAPS ##
@@ -99,7 +99,7 @@ restore,'vd_PIP_10.sav'
 
 levels2=findgen(201)/200*0.01+0.0	; color scale for frictional heating components
 levels3=findgen(201)/200*0.2+0.0	; color scale for Ohmic heating
-levels4=findgen(201)/200*0.0+0.5	; color scale for temperatures
+levels4=findgen(201)/200*0.07+0.15	; color scale for temperatures
 
 ; ## Neutral temperature panels ##
 w=window(dimension=[1920,1080],/buffer)
@@ -180,30 +180,30 @@ ai[1].tickname=['','','']
 
 ; ## Ion/rec frictional heating panels (FH2) ##
 
-c1=contour(reform(fh2_0)>levels2[0]+0.0001,x,y,c_value=levels2,/fill,xstyle=1,ystyle=1,xr=[-1.,1.],yr=[-1.,1.],rgb_table=51,aspect_ratio=1, AXIS_STYLE=2,col=0,xtitle='x',xtickfont_size=18,ytickfont_size=18,C_LABEL_SHOW=0,position=[0.59,0.65,0.77,0.95],/current)
+;c1=contour(reform(fh2_0)>levels2[0]+0.0001,x,y,c_value=levels2,/fill,xstyle=1,ystyle=1,xr=[-1.,1.],yr=[-1.,1.],rgb_table=51,aspect_ratio=1, AXIS_STYLE=2,col=0,xtitle='x',xtickfont_size=18,ytickfont_size=18,C_LABEL_SHOW=0,position=[0.59,0.65,0.77,0.95],/current)
 
-c2=contour(reform(fh2_1)>levels2[0]+0.0001,x,y,c_value=levels2,/fill,xstyle=1,ystyle=1,xr=[-1.,1.],yr=[-1.,1.],rgb_table=51,aspect_ratio=1, AXIS_STYLE=2,col=0,xtitle='x',xtickfont_size=18,ytickfont_size=18,C_LABEL_SHOW=0,position=[0.59,0.35,0.77,0.65],/current)
+;c2=contour(reform(fh2_1)>levels2[0]+0.0001,x,y,c_value=levels2,/fill,xstyle=1,ystyle=1,xr=[-1.,1.],yr=[-1.,1.],rgb_table=51,aspect_ratio=1, AXIS_STYLE=2,col=0,xtitle='x',xtickfont_size=18,ytickfont_size=18,C_LABEL_SHOW=0,position=[0.59,0.35,0.77,0.65],/current)
 
-c3=contour(reform(fh2_2)>levels2[0]+0.0001,x,y,c_value=levels2,/fill,xstyle=1,ystyle=1,xr=[-1.,1.],yr=[-1.,1.],rgb_table=51,aspect_ratio=1, AXIS_STYLE=2,col=0,xtitle='x',xtickfont_size=18,ytickfont_size=18,C_LABEL_SHOW=0,position=[0.59,0.05,0.77,0.35],/current)
+;c3=contour(reform(fh2_2)>levels2[0]+0.0001,x,y,c_value=levels2,/fill,xstyle=1,ystyle=1,xr=[-1.,1.],yr=[-1.,1.],rgb_table=51,aspect_ratio=1, AXIS_STYLE=2,col=0,xtitle='x',xtickfont_size=18,ytickfont_size=18,C_LABEL_SHOW=0,position=[0.59,0.05,0.77,0.35],/current)
 
-bara=COLORBAR(TARGET=c3,rgb_table=51,ORIENTATION=0,position=[0.61,0.96,0.75,0.98],TEXTPOS = 1,major=3,taper=0,FONT_SIZE=18,TITLE='$FH_2$',range=[0,0.01],TICKVALUES=[0.0,0.005,0.01],TICKNAME=['0.0','0.005','0.01'])
+;bara=COLORBAR(TARGET=c3,rgb_table=51,ORIENTATION=0,position=[0.61,0.96,0.75,0.98],TEXTPOS = 1,major=3,taper=0,FONT_SIZE=18,TITLE='$FH_2$',range=[0,0.01],TICKVALUES=[0.0,0.005,0.01],TICKNAME=['0.0','0.005','0.01'])
 
-a1=c1.axes
-a1[0].tickvalue=[-0.5,-0,0.5]
-a1[1].tickvalue=[-0.5,-0,0.5]
-a1[0].tickname=['','','']
-a1[1].tickname=['','','']
+;a1=c1.axes
+;a1[0].tickvalue=[-0.5,-0,0.5]
+;a1[1].tickvalue=[-0.5,-0,0.5]
+;a1[0].tickname=['','','']
+;a1[1].tickname=['','','']
 
-a2=c2.axes
-a2[0].tickvalue=[-0.5,-0,0.5]
-a2[1].tickvalue=[-0.5,-0,0.5]
-a2[0].tickname=['','','']
-a2[1].tickname=['','','']
+;a2=c2.axes
+;a2[0].tickvalue=[-0.5,-0,0.5]
+;a2[1].tickvalue=[-0.5,-0,0.5]
+;a2[0].tickname=['','','']
+;a2[1].tickname=['','','']
 
-a3=c3.axes
-a3[0].tickvalue=[-0.5,-0,0.5]
-a3[1].tickvalue=[-0.5,-0,0.5]
-a3[1].tickname=['','','']
+;a3=c3.axes
+;a3[0].tickvalue=[-0.5,-0,0.5]
+;a3[1].tickvalue=[-0.5,-0,0.5]
+;a3[1].tickname=['','','']
 
 ; ## Ohmic heating panels ##
 
