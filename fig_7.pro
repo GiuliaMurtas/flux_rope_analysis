@@ -132,7 +132,7 @@ ce=contour(reform(Tp_10_1)>levels4[0]+0.0001,x,y,c_value=levels4,/fill,xstyle=1,
 
 cf=contour(reform(Tp_10_2)>levels4[0]+0.0001,x,y,c_value=levels4,/fill,xstyle=1,ystyle=1,xr=[-1.,1.],yr=[-1.,1.],rgb_table=55,aspect_ratio=1, AXIS_STYLE=2,col=0,xtitle='x',xtickfont_size=18,ytickfont_size=18,C_LABEL_SHOW=0,position=[0.275,0.05,0.5,0.35],/current)
 
-bar2=COLORBAR(TARGET=cd,rgb_table=55,ORIENTATION=0,position=[0.295,0.96,0.0.47,0.98],TEXTPOS = 1,major=2,taper=0,FONT_SIZE=18,TITLE='$T_p$',range=[0.0,0.5],TICKVALUES=[0.2,0.4],TICKNAME=['0.2','0.4'])
+bar2=COLORBAR(TARGET=cd,rgb_table=55,ORIENTATION=0,position=[0.295,0.96,0.0.48,0.98],TEXTPOS = 1,major=2,taper=0,FONT_SIZE=18,TITLE='$T_p$',range=[0.07,0.15],TICKVALUES=[0.07,0.1],TICKNAME=['0.07','0.1'])
 
 ad=cd.axes
 ad[0].tickvalue=[-0.5,-0,0.5]
@@ -159,7 +159,7 @@ ch=contour(reform(fh_10_1)>levels2[0]+0.0001,x,y,c_value=levels2,/fill,xstyle=1,
 
 ci=contour(reform(fh_10_2)>levels2[0]+0.0001,x,y,c_value=levels2,/fill,xstyle=1,ystyle=1,xr=[-1.,1.],yr=[-1.,1.],rgb_table=57,aspect_ratio=1, AXIS_STYLE=2,col=0,xtitle='x',xtickfont_size=18,ytickfont_size=18,C_LABEL_SHOW=0,position=[0.5,0.05,0.725,0.35],/current)
 
-bar3=COLORBAR(TARGET=cg,rgb_table=57,ORIENTATION=0,position=[0.53,0.96,0.705,0.98],TEXTPOS = 1,major=3,taper=0,FONT_SIZE=18,TITLE='$FH_1$',range=[0,0.01],TICKVALUES=[0.0,0.005,0.01],TICKNAME=['0.0','0.005','0.01'])
+bar3=COLORBAR(TARGET=cg,rgb_table=57,ORIENTATION=0,position=[0.52,0.96,0.705,0.98],TEXTPOS = 1,major=3,taper=0,FONT_SIZE=18,TITLE='$FH_1$',range=[0,0.01],TICKVALUES=[0.0,0.005,0.01],TICKNAME=['0.0','0.005','0.01'])
 
 ag=cg.axes
 ag[0].tickvalue=[-0.5,-0,0.5]
@@ -213,7 +213,7 @@ cm=contour(reform(ohm_10_1)>levels3[0]+0.0001,x,y,c_value=levels3,/fill,xstyle=1
 
 cn=contour(reform(ohm_10_2)>levels3[0]+0.0001,x,y,c_value=levels3,/fill,xstyle=1,ystyle=1,xr=[-1.,1.],yr=[-1.,1.],rgb_table=62,aspect_ratio=1, AXIS_STYLE=2,col=0,xtitle='x',xtickfont_size=18,ytickfont_size=18,C_LABEL_SHOW=0,position=[0.725,0.05,0.95,0.35],/current)
 
-bar4=COLORBAR(TARGET=cl,rgb_table=62,ORIENTATION=0,position=[0.755,0.96,0.93,0.98],TEXTPOS = 1,major=3,taper=0,FONT_SIZE=18,TITLE='$Ohmic heating$',range=[0,0.2],TICKVALUES=[0.0,0.1,0.2],TICKNAME=['0.0','0.1','0.2'])
+bar4=COLORBAR(TARGET=cl,rgb_table=62,ORIENTATION=0,position=[0.745,0.96,0.93,0.98],TEXTPOS = 1,major=3,taper=0,FONT_SIZE=18,TITLE='$Ohmic heating$',range=[0,0.2],TICKVALUES=[0.0,0.1,0.2],TICKNAME=['0.0','0.1','0.2'])
 
 al=cl.axes
 al[0].tickvalue=[-0.5,-0,0.5]
