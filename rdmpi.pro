@@ -1,6 +1,6 @@
 pro rdmpi,pv,datapath=datapath,current=current,flag_double=flag_double,$
            time_step=time_step,flag_az=flag_az,flag_te=flag_te,var=var,$
-            h5read=h5read,nidealt=nidealt
+            h5read=h5read
   Compile_Opt DEFINT32  
   if(n_elements(datapath)eq 0 ) then datapath="tmp/" else datapath=datapath+"/"
   if(n_elements(current) eq 0) then current=0
@@ -10,7 +10,6 @@ pro rdmpi,pv,datapath=datapath,current=current,flag_double=flag_double,$
   if(n_elements(flag_te) eq 0) then flag_te = 0 ;; temperature
   if(n_elements(var) eq 0) then var = [] ;; selected variables
   if(n_elements(h5read) eq 0) then h5read=0
-  if(n_elements(nidealt) eq 0) then nidealt=1
 
   get_param2,datapath,info
   gm=info.gm
@@ -166,7 +165,68 @@ endelse
 ;===============================================-
 ; Non-ideal terms
 ;===============================================
-if (nidealt eq 1) then begin
+ flag_ir=1
+ if flag_ir eq 1 then begin
+    ir_flag=info.flag_ir mod 10
+    if ir_flag eq 1 then begin
+       ion=dblarr(ix,jx,kx,n_read)
+       rec=dblarr(ix,jx,kx,n_read)
+    endif else begin
+       ion=dblarr(ix,jx,kx,n_read)
+       rec=dblarr(ix,jx,kx,n_read)
+    endelse                   
+;print, 'ION'
+pv=create_struct(pv,["flag_ir"], info.flag_ir)
+pv=create_struct(pv,["flag_ir_type"], info.flag_ir_type) 
+pv=create_struct(pv,["T0"], info.T_norm) 
+    for np=0,n_read-1 do begin
+    files=file_search(datapath+"/"+string(time_step[np],form="(i4.4)")+"ion.dac.*")
+mpi_read,ion1,files,mpi_x,mpi_y,mpi_z,margin,ix_m,jx_m,kx_m
+      ion[*,*,*,np]=ion1
+    files=file_search(datapath+"/"+string(time_step[np],form="(i4.4)")+"rec.dac.*")
+mpi_read,rec1,files,mpi_x,mpi_y,mpi_z,margin,ix_m,jx_m,kx_m
+      rec[*,*,*,np]=rec1
+    endfor
+    pv=create_struct(pv,["ion"], reform(ion))  
+    pv=create_struct(pv,["rec"], reform(rec))        
+ endif
+if (n_elements(var) eq 0) then begin
+  if info.flag_resi ge 1 or info.flag_artvis eq 2 then begin
+     flag_resi=1
+     catch,error
+     if error ne 0 then begin
+        print,"Error loading resistivty"
+        flag_resi=0
+        catch,/cancel
+     endif 
+     if flag_resi eq 1 then begin
+;        ts=1
+        fl_resi=info.flag_resi
+        fl_resi=fl_resi mod 10
+        if fl_resi eq 1 then begin
+           t_resi=1
+        endif else begin
+           t_resi=ts
+        endelse
+        et=dblarr(ix,jx,kx,t_resi)
+        files=file_search(datapath+"et.dac."+ $
+                          string(indgen(n_cpu),form="(i4.4)"))
+        mpi_read,et,files,mpi_x,mpi_y,margin,ix_m,jx_m,kx_m,time_step=time_step
+        pv=create_struct(pv,["et"], reform(et))
+     endif
+  endif
+
+;restore the alpha coefficient
+  if (info.flag_pip ge 1) then begin
+	ac=dblarr(ix,jx,kx,n_read)
+print, 'ION'
+        for np=0,n_read-1 do begin
+        files=file_search(datapath+"/"+string(time_step[np],form="(i4.4)")+"ac.dac.*")
+	mpi_read,ac1,files,mpi_x,mpi_y,mpi_z,margin,ix_m,jx_m,kx_m
+          ac[*,*,*,np]=ac1
+        endfor
+        pv=create_struct(pv,["ac"], reform(ac))
+  endif
 
   if (((info.flag_ir mod 10) ge 1) and (info.flag_pip ge 1))  then begin
      flag_ir=1
@@ -179,7 +239,7 @@ if (nidealt eq 1) then begin
            ion=dblarr(ix,jx,kx,n_read)
            rec=dblarr(ix,jx,kx,n_read)
         endelse                   
-print, 'ION'
+;print, 'ION'
 	pv=create_struct(pv,["flag_ir"], info.flag_ir)
 	pv=create_struct(pv,["flag_ir_type"], info.flag_ir_type) 
 	pv=create_struct(pv,["T0"], info.T_norm) 
@@ -194,39 +254,172 @@ print, 'ION'
         pv=create_struct(pv,["ion"], reform(ion))  
         pv=create_struct(pv,["rec"], reform(rec))        
      endif
+     if (info.flag_ir eq 4)then begin
+        Nexcite=dblarr(ix,jx,kx,6,n_read)
+        for np=0,n_read-1 do begin
+        files=file_search(datapath+"/"+string(time_step[np],form="(i4.4)")+"nexcite1.dac.*")
+	mpi_read,nexcite1,files,mpi_x,mpi_y,mpi_z,margin,ix_m,jx_m,kx_m
+          Nexcite[*,*,*,0,np]=(nexcite1)
+        files=file_search(datapath+"/"+string(time_step[np],form="(i4.4)")+"nexcite2.dac.*")
+	mpi_read,nexcite1,files,mpi_x,mpi_y,mpi_z,margin,ix_m,jx_m,kx_m
+          Nexcite[*,*,*,1,np]=(nexcite1)
+        files=file_search(datapath+"/"+string(time_step[np],form="(i4.4)")+"nexcite3.dac.*")
+	mpi_read,nexcite1,files,mpi_x,mpi_y,mpi_z,margin,ix_m,jx_m,kx_m
+          Nexcite[*,*,*,2,np]=(nexcite1)
+        files=file_search(datapath+"/"+string(time_step[np],form="(i4.4)")+"nexcite4.dac.*")
+	mpi_read,nexcite1,files,mpi_x,mpi_y,mpi_z,margin,ix_m,jx_m,kx_m
+          Nexcite[*,*,*,3,np]=(nexcite1)
+        files=file_search(datapath+"/"+string(time_step[np],form="(i4.4)")+"nexcite5.dac.*")
+	mpi_read,nexcite1,files,mpi_x,mpi_y,mpi_z,margin,ix_m,jx_m,kx_m
+          Nexcite[*,*,*,4,np]=(nexcite1)
+        files=file_search(datapath+"/"+string(time_step[np],form="(i4.4)")+"nexcite6.dac.*")
+	mpi_read,nexcite1,files,mpi_x,mpi_y,mpi_z,margin,ix_m,jx_m,kx_m
+          Nexcite[*,*,*,5,np]=(nexcite1)
+        endfor
+        pv=create_struct(pv,["nexcite"], reform(Nexcite)) 
+     endif
+     if (info.flag_ir_type eq 0) then begin
+	aheat=dblarr(ix,jx,kx,n_read)
+        for np=0,n_read-1 do begin
+        files=file_search(datapath+"/"+string(time_step[np],form="(i4.4)")+"aheat.dac.*")
+	mpi_read,aheat1,files,mpi_x,mpi_y,mpi_z,margin,ix_m,jx_m,kx_m
+          aheat[*,*,*,np]=aheat1
+	endfor
+        pv=create_struct(pv,["aheat"], reform(aheat)) 
+     endif
   endif
 
-  if current eq 1 then begin
-	print,'Getting eta'
-	eta=dblarr(ix,jx,kx)
-        files=file_search(datapath+"/"+string(time_step[0],form="(i4.4)")+"et.dac.*")
-        mpi_read,eta1,files,mpi_x,mpi_y,mpi_z,margin,ix_m,jx_m,kx_m
-          eta[*,*,*]=eta1
-        ;endfor
-        pv=create_struct(pv,["eta"], reform(eta))
+;     if info.flag_visc eq 1 then begin                
+;print, 'visc'
+;visc=dblarr(ix,jx,kx,3,n_read)
+;        for np=0,n_read-1 do begin
+;        files=file_search(datapath+"/"+string(time_step[np],form="(i4.4)")+"viscx.dac.*")
+;	mpi_read,visc1,files,mpi_x,mpi_y,mpi_z,margin,ix_m,jx_m,kx_m
+;          visc[*,*,*,0,np]=visc1
 
-        print,'CURRENT ONLY WORKS IN 2D AT PRESENT'
-        j_x=dblarr(ix,jx,kx,n_read)
-        j_y=dblarr(ix,jx,kx,n_read)
-        j_z=dblarr(ix,jx,kx,n_read)
-        dx=abs(pv.x[1]-pv.x[0]) ; grid point size
-        dy=abs(pv.y[1]-pv.y[0])
-	dz=abs(pv.z[1]-pv.z[0])
+;        files=file_search(datapath+"/"+string(time_step[np],form="(i4.4)")+"viscy.dac.*")
+;	mpi_read,visc1,files,mpi_x,mpi_y,mpi_z,margin,ix_m,jx_m,kx_m
+;          visc[*,*,*,1,np]=visc1
+
+
+;        files=file_search(datapath+"/"+string(time_step[np],form="(i4.4)")+"viscz.dac.*")
+;	mpi_read,visc1,files,mpi_x,mpi_y,mpi_z,margin,ix_m,jx_m,kx_m
+;          visc[*,*,*,2,np]=visc1
+;        endfor
+;        pv=create_struct(pv,["visc"], reform(visc))        
+;     endif
+
+
+;restore the reference energy cooling term
+  if (info.flag_rad ge 1) then begin
+	edref=dblarr(ix,jx,kx,n_read)
+print, 'Rad_cooling'
         for np=0,n_read-1 do begin
-                j_x[2:(ix-3),2:(jx-3),2:(kx-3),np]=(-pv.Bz[2:(ix-3),4:(jx-1),2:(kx-3),np]+8.*pv.Bz[2:(ix-3),3:(jx-2),2:(kx-3),np]-8.*pv.Bz[2:(ix-3),1:(jx-4),2:(kx-3),np]+pv.Bz[2:(ix-3),0:(jx-5),2:(kx-3),np])/(12.*dy) +$
-			(pv.By[2:(ix-3),2:(jx-3),4:(kx-1),np]+8.*pv.By[2:(ix-3),2:(jx-3),3:(kx-2),np]-8.*pv.By[2:(ix-3),2:(jx-3),1:(kx-4),np]+pv.By[2:(ix-3),2:(jx-3),0:(kx-5),np])/(12.*dz) 
-
-                j_y[2:(ix-3),2:(jx-3),2:(kx-3),np]=(-pv.Bz[4:(ix-1),2:(jx-3),2:(kx-3),np]+8.*pv.Bz[3:(ix-2),2:(jx-3),2:(kx-3),np]-8.*pv.Bz[1:(ix-4),2:(jx-3),2:(kx-3),np]+pv.Bz[0:(ix-5),2:(jx-3),2:(kx-3),np])/(12.*dx) -$
-			(-pv.Bx[2:(ix-3),2:(jx-3),4:(kx-1),np]+8.*pv.Bx[2:(ix-3),2:(jx-3),3:(kx-2),np]-8.*pv.Bx[2:(ix-3),2:(jx-3),1:(kx-4),np]+pv.Bx[2:(ix-3),2:(jx-3),0:(kx-5),np])/(12.*dz)
-
-                j_z[2:(ix-3),2:(jx-3),2:(kx-3),np]=(-pv.By[4:(ix-1),2:(jx-3),2:(kx-3),np]+8.*pv.By[3:(ix-2),2:(jx-3),2:(kx-3),np]-8.*pv.By[1:(ix-4),2:(jx-3),2:(kx-3),np]+pv.By[0:(ix-5),2:(jx-3),2:(kx-3),np])/(12.*dx) - $
-                (-pv.Bx[2:(ix-3),4:(jx-1),2:(kx-3),np]+8.*pv.Bx[2:(ix-3),3:(jx-2),2:(kx-3),np]-8.*pv.Bx[2:(ix-3),1:(jx-4),2:(kx-3),np]+pv.Bx[2:(ix-3),0:(jx-5),2:(kx-3),np])/(12.*dy)
+        files=file_search(datapath+"/"+string(time_step[np],form="(i4.4)")+"edref_m.dac.*")
+	mpi_read,ac1,files,mpi_x,mpi_y,mpi_z,margin,ix_m,jx_m,kx_m
+          edref[*,*,*,np]=ac1
         endfor
+        pv=create_struct(pv,["edref_p"], reform(edref))
+        if (info.flag_pip eq 1) then begin
+            for np=0,n_read-1 do begin
+            files=file_search(datapath+"/"+string(time_step[np],form="(i4.4)")+"edref_h.dac.*")
+	    mpi_read,ac1,files,mpi_x,mpi_y,mpi_z,margin,ix_m,jx_m,kx_m
+              edref[*,*,*,np]=ac1
+            endfor
+            pv=create_struct(pv,["edref_n"], reform(edref))
+        endif
+    radrho=info.radrhoref
+    radt=info.rad_ts
+   pv=create_struct(pv,["radt"], reform(radt))
+    pv=create_struct(pv,["radrho"], reform(radrho)) 
+    rlos_m=(pv.pr_p/(gm-1.0)+(pv.ro_p*pv.vx_p^2+pv.ro_p*pv.vy_p^2+pv.ro_p*pv.vz_p^2)/2.0+$
+        (pv.bx^2+pv.by^2+pv.bz^2)/2.0)-pv.edref_p
+    rlos_m=rlos_m/(pv.ro_p/pv.radrho(0))^(-1.7)/pv.radt(0)
+    pv=create_struct(pv,["rlos_p"], reform(rlos_m)) 
+    if (info.flag_pip eq 1) then begin
+        rlos_h=pv.pr_n/(gm-1.0)+(pv.ro_n*pv.vx_n^2+pv.ro_n*pv.vy_n^2+pv.ro_n*pv.vz_n^2)/2.0$
+            -pv.edref_n
+        rlos_h=rlos_h/(pv.ro_n/pv.radrho(0))^(-1.7)/pv.radt(0)
+        pv=create_struct(pv,["rlos_n"], reform(rlos_h)) 
+    endif
+  endif
+
+  if (info.flag_amb mod 10) ge 1  then begin
+     flag_ir=1
+     catch,error
+     if error ne 0 then begin
+        print,"Error loading xin"
+        flag_ir=0
+        catch,/cancel
+     endif 
+     if flag_ir eq 1 then begin
+        ir_flag=info.flag_amb mod 10
+        if ir_flag eq 1 then begin
+           xin=dblarr(ix,jx,kx)
+        endif else begin
+           xin=dblarr(ix,jx,kx,ts)
+        endelse                   
+        files=file_search(datapath+"xi.dac."+ $
+                          string(indgen(n_cpu),form="(i4.4)"))
+        mpi_read,xin,files,mpi_x,mpi_y,margin,ix_m,jx_m,kx_m,time_step=time_step
+        pv=create_struct(pv,["xi"], reform(xin))                
+     endif
+  endif
+
+  if info.flag_grav ge 1 then begin
+;     dacget3s,datapath+'gr.dac.0000',gr
+;     pv=create_struct(pv,["gr"], reform(gr))
+  endif
+
+  if flag_az eq 1 then begin
+     dx = fltarr(ix)
+     dy = fltarr(jx)
+     for i=0,ix-2 do begin
+        dx[i] = pv.x[i+1]-pv.x[i]
+     endfor
+     dx[ix-1] = dx[ix-2]
+     for j=0,jx-2 do begin
+        dy[j] = pv.y[j+1]-pv.y[j]
+     endfor
+     dy[jx-2] = dy[jx-2]
+     cal_az2d,pv.bx,pv.by,dx,dy,az,itype=1,dirct=1,margin=margin[0] $
+              ,filename=datapath+'az.sav'
+     pv = create_struct(pv,["az"],reform(az))
+  endif
+
+  if flag_te eq 1 then begin
+     if (flag_pip eq 1 or flag_mhd eq 0) then begin
+        te = gm*pv.pr_n/pv.ro_n
+        pv = create_struct(pv,["te_n"],reform(te))
+     endif
+     if (flag_mhd eq 1) then begin
+        te = gm*pv.pr_p/pv.ro_p
+        pv = create_struct(pv,["te_p"],reform(te))
+     endif
+  endif
+  
+;  pv=create_struct(pv,["var_names"], var_names)
+;  if current eq 1 then get_cur,pv
+
+  if current eq 1 then begin
+	print,'CURRENT ONLY WORKS IN 2D AT PRESENT'
+	j_x=dblarr(ix,jx,kx,n_read)
+	j_y=dblarr(ix,jx,kx,n_read)
+	j_z=dblarr(ix,jx,kx,n_read)
+	dx=abs(pv.x[1]-pv.x[0]) ; grid point size
+	dy=abs(pv.y[1]-pv.y[0])
+        for np=0,n_read-1 do begin
+		j_x[2:(ix-3),2:(jx-3),np]=(-pv.Bz[2:(ix-3),4:(jx-1),np]+8.*pv.Bz[2:(ix-3),3:(jx-2),np]-8.*pv.Bz[2:(ix-3),1:(jx-4),np]+pv.Bz[2:(ix-3),0:(jx-5),np])/(12.*dy)
+
+		j_y[2:(ix-3),2:(jx-3),np]=-(-pv.Bz[4:(ix-1),2:(jx-3),np]+8.*pv.Bz[3:(ix-2),2:(jx-3),np]-8.*pv.Bz[1:(ix-4),2:(jx-3),np]+pv.Bz[0:(ix-5),2:(jx-3),np])/(12.*dx)
+
+		j_z[2:(ix-3),2:(jx-3),np]=(-pv.By[4:(ix-1),2:(jx-3),np]+8.*pv.By[3:(ix-2),2:(jx-3),np]-8.*pv.By[1:(ix-4),2:(jx-3),np]+pv.By[0:(ix-5),2:(jx-3),np])/(12.*dx) - $
+		(-pv.Bx[2:(ix-3),4:(jx-1),np]+8.*pv.Bx[2:(ix-3),3:(jx-2),np]-8.*pv.Bx[2:(ix-3),1:(jx-4),np]+pv.Bx[2:(ix-3),0:(jx-5),np])/(12.*dy)
+	endfor
         pv = create_struct(pv,["j_x"],reform(j_x))
         pv = create_struct(pv,["j_y"],reform(j_y))
         pv = create_struct(pv,["j_z"],reform(j_z))
   endif
-
 
 endif
 
@@ -240,7 +433,7 @@ endif else begin
     fpath=datapath+'/t0000.h5' 
     fpath=datapath+"/t"+string(string(time_step),form="(i4.4)")+'.h5'
 print,'ONLY READING ONE TIME STEP FOR TESTS'   
-    readvars=['xgrid']
+    readvars=['time','xgrid']
     if ndim ge 2 then readvars=[readvars,'ygrid']
     if ndim ge 3 then readvars=[readvars,'zgrid']
     h5get,pv,fpath,readvars,1

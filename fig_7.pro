@@ -1,6 +1,6 @@
 ; Files to be loaded: T_PIP_10.sav, fh_PIP_10.sav, vd_PIP_10.sav
 
-popul=1
+popul=0
 
 ; -------------------
 ; ## OHMIC HEATING ##
@@ -62,7 +62,7 @@ endif
 ; --------------------------------
 ; ## ION/REC FRICTIONAL HEATING ##
 ; --------------------------------
-
+popul = 0
 if popul eq 1 then begin
 	rdmpi,ds,datapath='../kink_instability_PIP_1',time_step=[13],var=['ro_p','ro_n','vx_p','vy_p','vz_p','vx_n','vy_n','vz_n']
 
@@ -233,6 +233,53 @@ an[1].tickvalue=[-0.5,-0,0.5]
 an[1].tickname=['','','']
 
 ca.save,'fig_7.jpg'
+
+
+file = 'fig_7.h5'
+fid = H5F_CREATE(file)
+print,file
+varlist=['Tn_10_0','Tn_10_1','Tn_10_2',$
+    'Tp_10_0','Tp_10_1','Tp_10_2',$
+    'fh_10_0','fh_10_1','fh_10_2',$
+    'fh2_0','fh2_1','fh2_2',$
+    'ohm_10_0','ohm_10_1','ohm_10_2']
+for var=0,n_elements(varlist)-1 do begin
+    varname=varlist(var)
+
+    print,varname,max(data),min(data)
+
+    if varname eq 'Tn_10_0' then data = Tn_10_0
+    if varname eq 'Tn_10_1' then data = Tn_10_1
+    if varname eq 'Tn_10_2' then data = Tn_10_2
+
+    if varname eq 'Tp_10_0' then data = Tp_10_0
+    if varname eq 'Tp_10_1' then data = Tp_10_1
+    if varname eq 'Tp_10_2' then data = Tp_10_2
+
+    if varname eq 'fh_10_0' then data = fh_10_0
+    if varname eq 'fh_10_1' then data = fh_10_1
+    if varname eq 'fh_10_2' then data = fh_10_2
+
+    if varname eq 'fh2_0' then data = fh2_0
+    if varname eq 'fh2_1' then data = fh2_1
+    if varname eq 'fh2_2' then data = fh2_2
+
+    if varname eq 'ohm_10_0' then data = ohm_10_0
+    if varname eq 'ohm_10_1' then data = ohm_10_1
+    if varname eq 'ohm_10_2' then data = ohm_10_2
+
+    datatype_id = H5T_IDL_CREATE(data)
+    dataspace_id = H5S_CREATE_SIMPLE(size(data,/DIMENSIONS))
+    dataset_id = H5D_CREATE(fid,$
+    varname,datatype_id,dataspace_id)
+    H5D_WRITE,dataset_id,data
+    H5D_CLOSE,dataset_id
+    H5S_CLOSE,dataspace_id
+    H5T_CLOSE,datatype_id
+endfor
+
+H5F_CLOSE,fid
+
 
 end
 
